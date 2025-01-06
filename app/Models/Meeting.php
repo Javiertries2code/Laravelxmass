@@ -9,4 +9,6 @@ class Meeting extends Model
 {
     /** @use HasFactory<\Database\Factories\MeetingFactory> */
     use HasFactory;
+    protected $guarded = [];
+
 }
