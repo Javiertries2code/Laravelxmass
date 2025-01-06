@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('meeting_user', function (Blueprint $table) {
+        Schema::create('schedule_user', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Meeting::class)->constrained()->cascadeOnDelete();
-            $table->timestamps();
+            $table->foreignIdFor(\App\Models\Schedule::class)->constrained()->cascadeOnDelete();
+
         });
     }
 
@@ -24,7 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-
-        Schema::dropIfExists('meeting_user');
+        Schema::dropIfExists('schedule_user');
     }
 };

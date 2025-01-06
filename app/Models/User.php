@@ -4,8 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class User extends Authenticatable
 {
@@ -17,12 +20,27 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
+
+    //Puede tener varios meettings
+    public function meetings(): HasMany {
+        return $this->hasMany(Meeting::class);
+    }
+
+    //por simplicidad y de momento, puede tener varias (matriculas pasadas, status inactivo, ya veremos si le dejo estar en dos cursos
+    //a la vex, lo mismo es mu espabilao el chico :-P)
+    public function registrations(): HasMany {
+        return $this->HasMany(Registration::class);
+    }
+
+    public function schedules(): HasMany {
+        return $this->hasMany(Schedule::class);
+    }
+
+   // existe la opcion return $this->hasManyThrough(Subject::class,... para llegar a la conexion de por ejemplo, subjects por profe
+
+   
     /**
      * The attributes that should be hidden for serialization.
      *
