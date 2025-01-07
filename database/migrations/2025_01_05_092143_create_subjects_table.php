@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('code')->unique();
-            $table->integer('hours')->unique();
+            $table->integer('hours');
 
         });
     }
