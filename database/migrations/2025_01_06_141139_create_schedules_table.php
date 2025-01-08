@@ -22,11 +22,28 @@ return new class extends Migration
             // $table->foreignId('subject_id')->nullable()->constrained('subjects')->cascadeOnDelete();
 
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('subject_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
 
+            $table->unsignedBigInteger('hour_1')->nullable();
+           $table->foreign('hour_1')->references('id')->on('subjects')->cascadeOnDelete();
 
-           $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-           $table->foreign('subject_id')->references('id')->on('subjects')->cascadeOnDelete();
+            $table->unsignedBigInteger('hour_2')->nullable();
+           $table->foreign('hour_2')->references('id')->on('subjects')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('hour_3')->nullable();
+           $table->foreign('hour_3')->references('id')->on('subjects')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('hour_4')->nullable();
+           $table->foreign('hour_4')->references('id')->on('subjects')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('hour_5')->nullable();
+           $table->foreign('hour_5')->references('id')->on('subjects')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('hour_6')->nullable();
+           $table->foreign('hour_6')->references('id')->on('subjects')->cascadeOnDelete();
+
+          
+
 
 
             $table->timestamps();

@@ -11,8 +11,13 @@ class Registration extends Model
 {
     /** @use HasFactory<\Database\Factories\RegistrationFactory> */
     use HasFactory;
+    
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
+    }
+    public function course(): BelongsTo{
+
+        return $this->belongsTo(Course::class);
     }
 
 }

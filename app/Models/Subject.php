@@ -21,8 +21,8 @@ class Subject extends Model
     }
 
 
-    public function schedules(): HasMany {
-        return $this->hasMany(Schedule::class);
+    public function schedules(): BelongsToMany {
+        return $this->BelongsToMany(Schedule::class);
     }
 
 }
