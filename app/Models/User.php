@@ -30,8 +30,8 @@ class User extends Authenticatable
 
     //por simplicidad y de momento, puede tener varias (matriculas pasadas, status inactivo, ya veremos si le dejo estar en dos cursos
     //a la vex, lo mismo es mu espabilao el chico :-P)
-    public function registrations(): HasMany {
-        return $this->HasMany(Registration::class);
+    public function registrations(): BelongstoMany {
+        return $this->BelongstoMany(Registration::class);
     }
 
     public function schedules(): HasMany {
