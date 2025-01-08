@@ -48,6 +48,16 @@ class SubjectSeeder extends Seeder
                 "created_at" => now(),
             ],
             [
+                "code" => "Asignatura 7",
+                "hours" => 170,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 8",
+                "hours" => 180,
+                "created_at" => now(),
+            ],
+            [
                 "code" => "Tutoria",
                 "hours" => 170,
                 "created_at" => now(),
