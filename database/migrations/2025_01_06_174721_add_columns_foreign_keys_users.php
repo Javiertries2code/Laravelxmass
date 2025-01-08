@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('telephone1')->nullable();
             $table->string('telephone2')->nullable();
             $table->binary('photo')->nullable();
+            $table->enum('user_type', ['God','admin', 'teacher', 'student'])->nullable()->default(null);
+
+
 
             $table->unsignedBigInteger('registration_id')->nullable();
             $table->unsignedBigInteger('meeting_id')->nullable();
@@ -36,7 +39,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['registration_id']);
             $table->dropForeign(['meeting_id']);
-            $table->dropColumn(['surname', 'telephone1', 'telephone2', 'photo']);
+            $table->dropColumn(['surname', 'telephone1', 'telephone2', 'photo', 'user_type']);
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         });
     }
