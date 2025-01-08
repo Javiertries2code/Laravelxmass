@@ -17,23 +17,23 @@ class SubjectSeeder extends Seeder
        $subjects =[
             [
                 "code" => "Asignatura 1",
-                "hours" => 125,
+                "hours" => 110,
                 "created_at" => now(),
             ],
             [
                 "code" => "Asignatura 2",
-                "hours" => 97,
+                "hours" => 120,
                 "created_at" => now(),
             ],
             [
                 "code" => "Asignatura 3",
-                "hours" => 97,
+                "hours" => 130,
                 "created_at" => now(),
             ],
 
             [
                 "code" => "Asignatura 4",
-                "hours" => 97,
+                "hours" => 140,
                 "created_at" => now(),
             ],
 
@@ -57,9 +57,15 @@ class SubjectSeeder extends Seeder
                 "hours" => 180,
                 "created_at" => now(),
             ],
+            
+            [
+                "code" => "Asignatura 9",
+                "hours" => 190,
+                "created_at" => now(),
+            ],
             [
                 "code" => "Tutoria",
-                "hours" => 170,
+                "hours" => 100,
                 "created_at" => now(),
             ]
             ];
