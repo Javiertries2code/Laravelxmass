@@ -25,9 +25,16 @@ class StudentScheduleSeeder extends Seeder
             //$subjects = $subjects->merge($course->subjects);
             $subjects = $course->subjects;
 
-            $randomSubjects = $subjects->shuffle()->take(6);
-            // This will take 6 even repeated, using random inferes unique and wouldnt work as i have less than 6 subjects per course
-            if ($subjects->count() > 0) {
+            $randomSubjects = $subjects->shuffle(); //baraja
+            $randomSubjects2 = $subjects->shuffle(); //baraja
+
+
+
+
+            // take 6, ofc
+            $randomSubjects = $randomSubjects->take(6);
+            if ($randomSubjects->count() > 0) {
+
                 foreach ($days_week as $day) {
 
                     $student_sh = [
@@ -43,6 +50,11 @@ class StudentScheduleSeeder extends Seeder
                     DB::table('student_schedules')->insert($student_sh);
                 }
             }
+            else
+                {
+                    echo "casca en $course->name pq esta vacio o algo";
+                }
+
         }
-    }
-}
+
+    }}

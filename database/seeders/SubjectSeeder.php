@@ -57,10 +57,64 @@ class SubjectSeeder extends Seeder
                 "hours" => 180,
                 "created_at" => now(),
             ],
-            
             [
                 "code" => "Asignatura 9",
                 "hours" => 190,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 10",
+                "hours" => 200,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 11",
+                "hours" => 210,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 12",
+                "hours" => 220,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 13",
+                "hours" => 230,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 14",
+                "hours" => 240,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 15",
+                "hours" => 250,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 16",
+                "hours" => 260,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 17",
+                "hours" => 270,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 18",
+                "hours" => 280,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 19",
+                "hours" => 290,
+                "created_at" => now(),
+            ],
+            [
+                "code" => "Asignatura 20",
+                "hours" => 300,
                 "created_at" => now(),
             ],
             [
