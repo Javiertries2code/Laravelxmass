@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->string('day_week');
-            $table->integer('hour');
+         
 
             // $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             // $table->foreignId('subject_id')->nullable()->constrained('subjects')->cascadeOnDelete();
