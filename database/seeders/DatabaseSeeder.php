@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(StudentScheduleSeeder::class);
         $this->call(RegistrationSeeder::class);
 
+        $this->call(UserFixedTest::class);
+       $this->call(TeacherScheduleSeeder::class);
+
 
 
 
