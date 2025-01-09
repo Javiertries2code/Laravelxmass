@@ -12,6 +12,13 @@ class MeetingSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $teachers = User::where('email', 'like', '%@javierFactory.com')->where('user_type', 'teacher')->pluck('id');
+        $students = User::where('user_type', 'student')->pluck('id');
+
+        $teachers =  $teachers->shuffle()->take(5);
+        $students =  $students->shuffle()->take(5);
+
+        
+
     }
 }

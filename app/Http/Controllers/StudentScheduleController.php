@@ -12,7 +12,7 @@ class StudentScheduleController extends Controller
      */
     public function index()
     {
-        //
+      
     }
 
     /**
@@ -34,9 +34,27 @@ class StudentScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(StudentSchedule $studentSchedule)
+    public function show()
     {
-        //
+       $studentSchedules =  StudentSchedule::all()->groupBy('course_id');
+
+         foreach( $studentSchedules as $schs)
+         {
+            foreach(  $schs as $sch)
+            {
+
+            echo "HORARIO--<br><br>";
+            echo "curso--";
+            echo $sch->course_id; echo "<br><br>";
+            echo $sch->day_week; echo "<br><brhour subject>--\r\n";
+            echo $sch->hour_1; echo "<br><brhour subject>--\r\n";
+            echo $sch->hour_2;echo "<br><br>hour subject--\r\n";
+            echo $sch->hour_3;echo "<br><br>hour subject--\r\n";
+            echo $sch->hour_4;echo "<br><br>hour subject--";
+            echo $sch->hour_5;echo "<br><br>hour subject--";
+            echo $sch->hour_6 ;echo "<br><br>";
+         }
+        }
     }
 
     /**

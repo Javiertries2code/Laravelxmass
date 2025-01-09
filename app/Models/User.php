@@ -25,8 +25,8 @@ class User extends Authenticatable
 
 
     //Puede tener varios meettings
-    public function meetings(): HasMany {
-        return $this->hasMany(Meeting::class);
+    public function meetings(): BelongstoMany {
+        return $this->BelongstoMany(Meeting::class);
     }
 
     //por simplicidad y de momento, puede tener varias (matriculas pasadas, status inactivo, ya veremos si le dejo estar en dos cursos
