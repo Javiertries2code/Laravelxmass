@@ -20,7 +20,8 @@ class CourseSeeder extends Seeder
             ['code' => 'curso 1', 'name' => "DAM"],
             ['code' => 'curso 2', 'name' => "DAO"],
             ['code' => 'curso 3', 'name' => "Sistemas"],
-            ['code' => 'curso 4"', 'name' => "WEB"]
+            ['code' => 'curso 4', 'name' => "WEB"],
+            ['code' => 'curso 5', 'name' => "Cyber Seguridad"]
         ];
 
         DB::table('courses')->insert($list_subjects);

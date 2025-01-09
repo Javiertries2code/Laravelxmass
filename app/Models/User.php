@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongstoMany;
 
 
 class User extends Authenticatable
@@ -40,7 +41,7 @@ class User extends Authenticatable
 
    // existe la opcion return $this->hasManyThrough(Subject::class,... para llegar a la conexion de por ejemplo, subjects por profe
 
-   
+
     /**
      * The attributes that should be hidden for serialization.
      *
