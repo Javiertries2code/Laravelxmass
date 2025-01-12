@@ -1,3 +1,5 @@
-@tailwind base;
+/* Se eliminna para evitar conflictos ocn bootstrap */
+
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */

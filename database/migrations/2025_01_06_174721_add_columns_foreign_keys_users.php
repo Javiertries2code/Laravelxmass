@@ -15,17 +15,17 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             ///Changed by me
             $table->string('surname')->nullable();
-            $table->string('telephone1')->nullable();
-            $table->string('telephone2')->nullable();
-            $table->binary('photo')->nullable();
+            $table->string('telephone1')->nullable()->default(null);;
+            $table->string('telephone2')->nullable()->default(null);;
+            $table->binary('photo')->nullable()->default(null);;
             $table->enum('user_type', ['God','admin', 'teacher', 'student'])->nullable()->default(null);
 
 
 
-            $table->unsignedBigInteger('registration_id')->nullable();
-            $table->unsignedBigInteger('meeting_id')->nullable();
-            $table->foreign('registration_id')->references('id')->on('registrations')->cascadeOnDelete();
-            $table->foreign('meeting_id')->references('id')->on('meeting_user')->cascadeOnDelete();
+            $table->unsignedBigInteger('registration_id')->nullable()->default(null);;
+            $table->unsignedBigInteger('meeting_id')->nullable()->default(null);;
+            $table->foreign('registration_id')->references('id')->on('registrations')->cascadeOnDelete()->default(null);;
+            $table->foreign('meeting_id')->references('id')->on('meeting_user')->cascadeOnDelete()->default(null);;
         });
     }
 

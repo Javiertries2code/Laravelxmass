@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'name' => 'God',
             'surname' => 'God',
             'email' => 'god@god.com',
+            'password' => bcrypt('god'),
             'user_type' => 'God',
             'photo'=> null
         ]);
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
             'name' => 'Test User2',
             'surname' => 'Test User surname',
             'email' => 'test@example2.com',
+            'password' => bcrypt('password'),
             'user_type' => 'admin',
             'photo'=> null
         ]);

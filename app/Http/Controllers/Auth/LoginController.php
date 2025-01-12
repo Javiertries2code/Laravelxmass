@@ -37,4 +37,24 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
+
+    //El fallo no afecta
+    protected function redirectTo() {
+        switch (auth()->user()->user_type) {
+            case 'God':
+                return '/god/home';
+                break;
+            case 'admin':
+                return '/admin/home';
+                break;
+            case 'teacher':
+                return '/teacher/home';
+                break;
+            case 'student':
+                return '/student/home';
+                break;
+            default:
+                return '/home';
+        }
+  }
 }
