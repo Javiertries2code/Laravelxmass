@@ -32,7 +32,7 @@ class AdminController extends Controller
         public function editStudent($id){
            
             $student = User::find($id);
-          // dd($student);
+           dd($student);
             return view('admin.editStudent', ['student' => $student]);
         }
 
