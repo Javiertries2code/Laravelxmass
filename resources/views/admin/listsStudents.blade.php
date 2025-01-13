@@ -25,18 +25,13 @@
                         <li class="pt-1">
                             <div class="d-flex flex-row">
 
-            <form action="{{ route('admin.editStudent', ['id' => $student['id']]) }}" method="GET">
-                                    @csrf
-                                    @method('UPDATE')
-                                    <button class="btn btn-sm btn-danger" type="submit"
-                                    onclick="return confirm('Are you sure?')">Editar
-                                    </button>
+    <form action="{{ route('admin.editStudent', ['id' => $student['id']]) }}" method="GET">
+    <button type="submit" class="btn btn-danger">Editar</button>
+</form>
 
-                            <form action="{{route('admin.deleteStudent',$value)}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger" type="submit"
-                            onclick="return confirm('Are you sure?')">Delete
+    <form action="{{ route('admin.deleteStudent', ['id' => $student['id']]) }}" method="GET">
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+</form>
                             </button>
                             </form>
                             </div>

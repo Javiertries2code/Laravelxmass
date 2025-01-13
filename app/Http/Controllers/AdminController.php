@@ -12,7 +12,7 @@ class AdminController extends Controller
 
         // return view('admin.listsStudents', ['students' => $students ]);
 
-            $students = \App\Models\User::all()->map(function ($student) {
+            $students = User::all()->map(function ($student) {
                 return [
                     'id' => $student->id,
                     'Nombre' => $student->name,
@@ -30,14 +30,18 @@ class AdminController extends Controller
         }
 
         public function editStudent($id){
-            dd($id);
+           
             $student = User::find($id);
+          // dd($student);
             return view('admin.editStudent', ['student' => $student]);
         }
+
         public function deleteStudent(string $id){
+           // dd($id);
             $student = User::find($id);
+           // $this->ejemplo();
             $student->delete();
-            return redirect()->route('listsStudents');
+            return redirect()->route('admin.listsStudents');
         }
 
 
@@ -87,5 +91,9 @@ class AdminController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    private function ejemplo(){
+
     }
 }

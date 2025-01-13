@@ -40,8 +40,9 @@ Route::get('/students', function () {
 //List all of students, Placed in admin controller as to controll access
 Route::get('admin/listsStudents', [App\Http\Controllers\AdminController::class, 'listsStudents'])->name('admin.listsStudents');
 
-Route::post('admin/deleteStudent', [App\Http\Controllers\StudentController::class, 'destroy'])->name('admin.deleteStudent');
-Route::get('admin/editStudent', [App\Http\Controllers\AdminController::class, 'editStudent'])->name('admin.editStudent');
+Route::get('/admin/deleteStudent/{id}', [App\Http\Controllers\AdminController::class, 'editStudent'])->name('admin.editStudent');
+
+Route::get('/admin/editStudent/{id}', [App\Http\Controllers\AdminController::class, 'deleteStudent'])->name('admin.deleteStudent');
 
 
 Route::get('students/horarios', [App\Http\Controllers\StudentScheduleController::class, 'show'])->name('students.horarios');

@@ -1,1 +1,1 @@
-<h1>DELETED</h1>
+<h1>$student->name</h1> 
