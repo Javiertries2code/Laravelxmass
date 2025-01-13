@@ -38,11 +38,11 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    //El fallo no afecta
+///this one to redirect after login
     protected function redirectTo() {
         switch (auth()->user()->user_type) {
             case 'God':
-                return '/god/home';
+                return '/admin/home';
                 break;
             case 'admin':
                 return '/admin/home';

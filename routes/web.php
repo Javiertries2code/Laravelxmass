@@ -36,6 +36,13 @@ Route::get('/students', function () {
    echo "calling students route";
 });
 
+//StudentsRoutes
+//List all of students, Placed in admin controller as to controll access
+Route::get('admin/listsStudents', [App\Http\Controllers\AdminController::class, 'listsStudents'])->name('admin.listsStudents');
+
+Route::post('admin/deleteStudent', [App\Http\Controllers\StudentController::class, 'destroy'])->name('admin.deleteStudent');
+Route::get('admin/editStudent', [App\Http\Controllers\AdminController::class, 'editStudent'])->name('admin.editStudent');
+
 
 Route::get('students/horarios', [App\Http\Controllers\StudentScheduleController::class, 'show'])->name('students.horarios');
 

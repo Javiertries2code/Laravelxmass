@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class StudentController extends Controller
+
+class StudentController extends AdminController
 {
     /**
      * Display a listing of the resource.
@@ -59,6 +61,8 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $student = User::find($id);
+        $student->delete();
+        return redirect()->route('listsStudents');
     }
 }
