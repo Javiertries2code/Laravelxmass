@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Estudiantes</title>
-</head>
-<body>
+
+@extends('layouts.app')
+@section('content')
     <h1>Lista de Estudiantes</h1>
     <table>
         <thead>
@@ -13,38 +8,39 @@
                 @foreach($headers as $header)
                     <th>{{ $header }}</th>
                 @endforeach
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             @foreach($students as $student)
                 <tr>
-                    @foreach($student as $key => $value)
-                        <td>{{ $value }}</td>
-                    @endforeach
+                    <td>{{ $student->id }}</td>
+                    <td>{{ $student->name }}</td>
+                    <td>{{ $student->surname }}</td>
+                    <td>{{ $student->email }}</td>
+                    <td>{{ $student->telephone1 }}</td>
+                    <td>{{ $student->telephone2 }}</td>
+                    <td>{{ $student->registration_id }}</td>
+                    
                     <td>
-                        <li class="pt-1">
-                            <div class="d-flex flex-row">
-
-            <form action="{{ route('admin.editStudent', ['id' => $student['id']]) }}" method="GET">
-                                    @csrf
-                                    @method('UPDATE')
-                                    <button class="btn btn-sm btn-danger" type="submit"
-                                    onclick="return confirm('Are you sure?')">Editar
-                                    </button>
-
-                            <form action="{{route('admin.deleteStudent',$value)}}" method="POST">
+                        <!-- Botón para eliminar -->
+                        <form action="{{ route('admin.deleteStudent', ['id' => $student->id]) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-sm btn-danger" type="submit"
-                            onclick="return confirm('Are you sure?')">Delete
+                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Está seguro de eliminar al estudiante {{ $student->id }}?')">
+                                Eliminar
                             </button>
-                            </form>
-                            </div>
-                            </li>
+                        </form>
+
+                        <!-- Botón para editar -->
+                        <form action="{{ route('admin.editStudent', ['id' => $student->id]) }}" method="GET" style="display: inline-block;">
+                            <button class="btn btn-sm btn-warning" type="submit">
+                                Editar
+                            </button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-</body>
-</html>
+@endsection

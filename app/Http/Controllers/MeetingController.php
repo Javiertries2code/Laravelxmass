@@ -14,9 +14,10 @@ class MeetingController extends Controller
     public function index()
     {
         $meetings = Meeting::all();
+        $headers = ['id', 'Dia', 'Hora', 'Profesor', 'Alumno', 'Email' ];
 
         // dd($meetings);
-        return view('meeting.allmeetings', ['meetings' => $meetings]);
+        return view('meeting.allmeetings', compact('meetings','headers'));
     }
 
     /**

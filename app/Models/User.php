@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongstoMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+
 
 
 class User extends Authenticatable
@@ -38,6 +40,13 @@ class User extends Authenticatable
     public function schedules(): HasMany {
         return $this->hasMany(Schedule::class);
     }
+
+
+    public function courses(): BelongsToMany {
+        return $this->belongsToMany(Course::class, 'registrations', 'user_id', 'course_id');
+    }
+
+
 
    // existe la opcion return $this->hasManyThrough(Subject::class,... para llegar a la conexion de por ejemplo, subjects por profe
 

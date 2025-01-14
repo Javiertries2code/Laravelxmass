@@ -5,11 +5,9 @@
 <table>
     <thead>
         <tr>
-            <th>Meeting ID</th>
-            <th>Day of the Week</th>
-            <th>Time</th>
-            <th>Teacher</th>
-            <th>Student</th>
+            @foreach($headers as $header)
+                <th>{{ $header }}</th>
+            @endforeach
         </tr>
     </thead>
     <tbody>

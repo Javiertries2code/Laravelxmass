@@ -8,36 +8,27 @@ use App\Models\User;
 class AdminController extends Controller
 {
     public function listsStudents(){
-        // $students = User::where('user_type', 'student')->get();
+         $students = User::where('user_type', 'student')->get();
 
-        // return view('admin.listsStudents', ['students' => $students ]);
 
-            $students = \App\Models\User::all()->map(function ($student) {
-                return [
-                    'id' => $student->id,
-                    'Nombre' => $student->name,
-                    'Apellido' => $student->surname,
-                    'Email' => $student->email,
-                    'Telefono 1' => $student->telephone_1,
-                    'Telefono 2' => $student->telephone_2,
-                    'ID de Matricula' => $student->registration_id,
-                ];
-            });
-
-            $headers = ['id', 'Nombre', 'Apellido', 'Email', 'Telefono 1', 'Telefono 2', 'ID de Matricula', 'Acciones'];
+            $headers = ['id', 'Nombre', 'Apellido', 'Email', 'Telefono 1', 'Telefono 2', 'ID de Matricula', ];
 
             return view('admin.listsStudents', compact('students', 'headers'));
         }
 
-        public function editStudent($id){
-            dd($id);
-            $student = User::find($id);
-            return view('admin.editStudent', ['student' => $student]);
+        public function editStudent(string $id){
+          //  echo "oneditstudent";
+           // dd($id);
+            $editstudent = User::find( $id);
+           // dd($editstudent);
+            return view('admin.editStudent', ['student' => $editstudent]);
         }
+
         public function deleteStudent(string $id){
+           // dd($id);
             $student = User::find($id);
             $student->delete();
-            return redirect()->route('listsStudents');
+            return redirect()->route('admin.listsStudents');
         }
 
 
@@ -79,6 +70,21 @@ class AdminController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+
+    public function updateStudent(Request $request, string $id)
+    {
+        $student = User::find($id);
+        $student->name = $request->name;
+        $student->surname = $request->surname;
+        $student->email = $request->email;
+
+        $student->telephone1 = $request->telephone_1;
+        $student->telephone2 = $request->telephone_2;
+        $student->registration_id = $request->registration_id;
+        $student->save();
+        return redirect()->route('admin.listsStudents');
     }
 
     /**
