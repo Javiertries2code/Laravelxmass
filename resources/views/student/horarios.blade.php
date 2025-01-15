@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
     <div class="container">
         <h1 class="mb-4">Horarios de los estudiantes</h1>
         @foreach ($schedules as $i => $studentGroup)
@@ -8,13 +9,13 @@
             <thead>
                 <tr>
                     <th>Día</th>
-                    <th>Hora</th>
-                    <th>Hora</th>
-                    <th>Hora</th>
-                    <th>Hora</th>
-                    <th>Hora</th>
-                    <th>Hora</th>
-                    <th>Asignatura</th>
+                    <th>Hora 1</th>
+                    <th>Hora 2</th>
+                    <th>Hora 3</th>
+                    <th>Hora 4</th>
+                    <th>Hora 5</th>
+                    <th>Hora 6</th>
+
                 </tr>
             </thead>
             <tbody>
