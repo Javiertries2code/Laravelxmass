@@ -42,13 +42,19 @@ Route::post('admin/storeNewUser', [App\Http\Controllers\AdminController::class, 
 Route::get('admin/createUser', [App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.createUser');
 
 Route::get('admin/listsStudents', [App\Http\Controllers\AdminController::class, 'listsStudents'])->name('admin.listsStudents');
+Route::get('admin/listsUsers', [App\Http\Controllers\AdminController::class, 'listsUsers'])->name('admin.listsUsers');
 
+Route::delete('/admin/deleteUser/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
 
 Route::delete('/admin/deleteStudent/{id}', [AdminController::class, 'deleteStudent'])->name('admin.deleteStudent');
 
 Route::put('/admin/updateStudent/{id}', [AdminController::class, 'updateStudent'])->name('admin.updateStudent');
+Route::put('/admin/updateUser/{id}', [AdminController::class, 'updateUser'])->name('admin.updateUser');
+
+
 
 Route::get('admin/editStudent/{id}', [AdminController::class, 'editStudent'])->name('admin.editStudent');
+Route::get('admin/editUser/{id}', [AdminController::class, 'editUser'])->name('admin.editUser');
 
 
 Route::get('students/horarios', [App\Http\Controllers\StudentScheduleController::class, 'show'])->name('students.horarios');

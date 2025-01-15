@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<form action="{{ route('admin.updateStudent', $student->id) }}" method="PUT">
+<form action="{{ route('admin.updateUser', $student->id) }}" method="POST">
     @csrf
     @method('PUT')
     <table class="table">
