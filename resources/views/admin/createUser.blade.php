@@ -16,9 +16,14 @@
             <th>Apellido</th>
             <td><input type="text" class="form-control" name="surname" value="{{ old('surname') }}"></td>
         </tr>
+
         <tr>
             <th>Email</th>
             <td><input type="email" class="form-control" name="email" value="{{ old('email') }}"></td>
+        </tr>
+        <tr>
+            <th>Tipo usuario</th>
+            <td><input type="text" class="form-control" name="surname" value="{{ old('surname') }}"></td>
         </tr>
         <tr>
             <th>Telefono 1</th>

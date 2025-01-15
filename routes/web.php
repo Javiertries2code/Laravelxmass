@@ -37,7 +37,7 @@ Route::get('student/studenthome', [App\Http\Controllers\AdminController::class, 
 Route::get('teacher/teacherhome', [App\Http\Controllers\AdminController::class, 'teacherhome'])->name('teacher.teacherhome');
 
 
-Route::post('admin/storeNewUser', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.storeNewUser');
+Route::post('admin/storeNewUser', [App\Http\Controllers\AdminController::class, 'storeNewUser'])->name('admin.storeNewUser');
 
 Route::get('admin/createUser', [App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.createUser');
 

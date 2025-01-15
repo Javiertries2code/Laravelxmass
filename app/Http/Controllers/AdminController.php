@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Hashing\BcryptHasher;
 use Spatie\Permission\Models\Role;
 
 
@@ -38,6 +38,14 @@ class AdminController extends Controller
 
 
               $roles = Role::all();
+
+              //con esta si el usuario no es god, no le aparece el rol god en el checkbox, digo yo
+              if (!auth()->user()->hasRole('god')) {
+                  $roles = $roles->filter(function ($role) {
+                      return $role->name != 'god';
+                  });
+              }
+
 
               $student = User::find($id);
             //  return view('admin.editStudent', compact('student'));
@@ -82,6 +90,10 @@ class AdminController extends Controller
         public function deleteUser(string $id){
             // dd($id);
              $student = User::find($id);
+            if ($student->hasRole('god')) {
+                return redirect()->route('admin.listsUsers')->with('error', 'No se puede eliminar el usuario con rol god');
+            }
+
              $student->delete();
              return redirect()->route('admin.listsUsers');
          }
@@ -92,6 +104,29 @@ class AdminController extends Controller
     public function create()
     {
         //
+    }
+
+    public function storeNewUser(Request $request){
+
+        $newUser = User::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'user_type' => $request->user_type,
+            'telephone1' => $request->telephone_1,
+            'telephone2' => $request->telephone_2,
+            'registration_id' => $request->registration_id,
+            'password' => Hash::make('password')
+
+            //es la contrasena por defecto, el ususario deberia registrarse y cambiarla
+        ]);
+        $roles = Role::whereIn('id', $request->roles)->get();
+
+        $newUser->syncRoles($roles);
+
+        return redirect()->route('admin.listsUsers');
+
+
     }
 
     public function updateStudent(Request $request, string $id)
@@ -134,7 +169,25 @@ if ($student->user_type == 'student') {
         return redirect()->route('admin.listsUsers');
 }
 
-
-
     }
+
+
+    public function adminhome(){
+
+        return view('admin.adminhome');
+
+}
+
+public function studenthome(){
+
+   return view('student.studenthome');
+
+}
+
+public function teacherhome(){
+
+   return view('teacher.teacherhome');
+
+}
+
 }
