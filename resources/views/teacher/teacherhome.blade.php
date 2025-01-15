@@ -1,1 +1,7 @@
-<h1>tecaher</h1>
+@extends('layouts.app')
+@section('content')
+<h1>teacher</h1>
+
+
+
+@endsection

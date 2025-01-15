@@ -44,7 +44,7 @@ protected function authenticated($request, $user)
         $role = $user->getRoleNames()->first();
 
         switch ($role) {
-            case 'God':
+            case 'god':
                 return redirect('/admin/adminhome');
             case 'admin':
                 return redirect('/admin/adminhome');
@@ -68,7 +68,7 @@ protected function authenticated($request, $user)
             $role = $user->getRoleNames()->first();
          dd($role);
             switch ($role) {
-                case 'God':
+                case 'god':
                     return '/admin/adminhome';
                 case 'admin':
                     return '/admin/adminhome';

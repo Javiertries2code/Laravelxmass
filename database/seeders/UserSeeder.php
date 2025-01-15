@@ -23,6 +23,33 @@ class UserSeeder extends Seeder
             'photo'=> null
         ])->assignRole('god');
 
+        User::factory()->create([
+            'name' => 'st',
+            'surname' => 'st',
+            'email' => 'st@st.com',
+            'password' => bcrypt('st'),
+            'user_type' => 'st',
+            'photo'=> null
+        ])->assignRole('student');
+
+        User::factory()->create([
+            'name' => 'te',
+            'surname' => 'te',
+            'email' => 'te@te.com',
+            'password' => bcrypt('te'),
+            'user_type' => 'te',
+            'photo'=> null
+        ])->assignRole('teacher');
+
+        User::factory()->create([
+            'name' => 'ad',
+            'surname' => 'ad',
+            'email' => 'ad@ad.com',
+            'password' => bcrypt('ad'),
+            'user_type' => 'ad',
+            'photo'=> null
+        ])->assignRole('admin');
+
         User::factory(20)->create([
             'user_type' => 'teacher',
         ])->each(function ($user) {
