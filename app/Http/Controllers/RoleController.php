@@ -37,7 +37,8 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $roles = Role::all();
+        return view('admin.roles', compact('roles'));
     }
 
     /**
@@ -59,15 +60,15 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $name)
     {
-        $role = Role::findOrFail($id);
-$protectedRoles = ['god', 'admin', 'teacher', 'student'];
-if (in_array($role->name, $protectedRoles)) {
-    return back()->with('error', "El rol '{$role->name}' no puede ser eliminado.");
-}
-$role->delete();
-return back()->with('success', "El rol '{$role->name}' se eliminó correctamente.");
+        $role = Role::where('name', $name)->first();
 
-    }
+        if (in_array($name, ['god', 'admin', 'teacher', 'student'])) {
+            return redirect()->back()->with('error', 'No se puede eliminar el rol ' . $name);
+        }
+
+            $role->delete();
+            return redirect()->back()->with('success', 'Rol eliminado');
+
 }
