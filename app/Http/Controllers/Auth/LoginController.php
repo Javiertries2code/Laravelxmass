@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -38,23 +38,50 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-///this one to redirect after login
-    protected function redirectTo() {
-        switch (auth()->user()->user_type) {
+///just in case it works
+protected function authenticated($request, $user)
+    {
+        $role = $user->getRoleNames()->first();
+
+        switch ($role) {
             case 'God':
-                return '/admin/home';
-                break;
+                return redirect('/admin/adminhome');
             case 'admin':
-                return '/admin/home';
-                break;
+                return redirect('/admin/adminhome');
             case 'teacher':
-                return '/teacher/home';
-                break;
+                return redirect('/teacher/teacherhome');
             case 'student':
-                return '/student/home';
-                break;
+                return redirect('/student/studenthome');
             default:
-                return '/home';
+                return redirect('/home');
         }
-  }
+    }
+///
+
+    protected function redirectTo()
+    {
+      //  dd(auth()->user()->getRoleNames()->first());
+
+        if (auth()->check()) {
+            $user = auth()->user();
+
+            $role = $user->getRoleNames()->first();
+         dd($role);
+            switch ($role) {
+                case 'God':
+                    return '/admin/adminhome';
+                case 'admin':
+                    return '/admin/adminhome';
+                case 'teacher':
+                    return '/teacher/teacherhome';
+                case 'student':
+                    return '/student/studenthome';
+                default:
+                    return '/home';
+            }
+       }
+
+        return '/student/home';
+    }
+
 }

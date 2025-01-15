@@ -2,7 +2,8 @@
 @extends('layouts.app')
 @section('content')
     <h1>Lista de Estudiantes</h1>
-    <table>
+    {{-- probando tabla cebreada --}}
+    <table class="table table-striped">
         <thead>
             <tr>
                 @foreach($headers as $header)
@@ -21,7 +22,7 @@
                     <td>{{ $student->telephone1 }}</td>
                     <td>{{ $student->telephone2 }}</td>
                     <td>{{ $student->registration_id }}</td>
-                    
+
                     <td>
                         <!-- Botón para eliminar -->
                         <form action="{{ route('admin.deleteStudent', ['id' => $student->id]) }}" method="POST" style="display: inline-block;">

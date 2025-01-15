@@ -21,20 +21,19 @@ class UserSeeder extends Seeder
             'password' => bcrypt('god'),
             'user_type' => 'God',
             'photo'=> null
-        ]);
-
-        User::factory()->create([
-            'name' => 'Test User2',
-            'surname' => 'Test User surname',
-            'email' => 'test@example2.com',
-            'password' => bcrypt('password'),
-            'user_type' => 'admin',
-            'photo'=> null
-        ]);
+        ])->assignRole('god');
 
         User::factory(20)->create([
-            'user_type' => 'teacher'
-        ]);
+            'user_type' => 'teacher',
+        ])->each(function ($user) {
+            $user->assignRole('teacher');
+        });
+
+        User::factory(5)->create([
+            'user_type' => 'admin',
+        ])->each(function ($user) {
+            $user->assignRole('admin');
+        });
 
         User::factory(50)->create([
             'user_type' => 'student',

@@ -5,6 +5,7 @@ use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +32,15 @@ Route::get('/students', function () {
 
 //StudentsRoutes
 //List all of students, Placed in admin controller as to controll access
+Route::get('admin/adminhome', [App\Http\Controllers\AdminController::class, 'adminhome'])->name('admin.adminhome');
+Route::get('student/studenthome', [App\Http\Controllers\AdminController::class, 'studenthome'])->name('student.studenthome');
+Route::get('teacher/teacherhome', [App\Http\Controllers\AdminController::class, 'teacherhome'])->name('teacher.teacherhome');
+
+
+Route::post('admin/storeNewUser', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.storeNewUser');
+
+Route::get('admin/createUser', [App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.createUser');
+
 Route::get('admin/listsStudents', [App\Http\Controllers\AdminController::class, 'listsStudents'])->name('admin.listsStudents');
 
 
@@ -53,7 +63,7 @@ Route::get('/teacher/horario', [App\Http\Controllers\TeacherController::class, '
 
  Route::get('/teacher/teachersList', [App\Http\Controllers\TeacherController::class, 'teachers'])->name('teachersList');
 
- Route::get('/teacher/showOne/{teacher_id}', [App\Http\Controllers\TeacherController::class, 'showOne'])->name('showOne');
+ Route::get('/teacher/showOne/{teacher_id}', [App\Http\Controllers\TeacherController::class, 'showOne'])->name('showOneteacher');
 
 
 /// Routes mmeting
