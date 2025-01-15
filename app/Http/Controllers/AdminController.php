@@ -25,7 +25,7 @@ class AdminController extends Controller
             $students = User::all();
 
 
-               $headers = ['id', 'Nombre', 'Apellido', 'Email', 'Telefono 1', 'Telefono 2', 'ID de Matricula', ];
+               $headers = ['id', 'Nombre', 'Apellido', 'Email','tipo de usuario' ,'Telefono 1', 'Telefono 2', 'ID de Matricula', ];
 
                return view('admin.listsUsers', compact('students', 'headers'));
            }
@@ -121,10 +121,20 @@ class AdminController extends Controller
         $student->telephone1 = $request->telephone_1;
         $student->telephone2 = $request->telephone_2;
         $student->registration_id = $request->registration_id;
-         $roles = Role::whereIn('id', $request->roles)->get();
+if ($student->user_type == 'student') {
+
+
+    return redirect()->route('admin.listsUsers');
+
+} else {
+     $roles = Role::whereIn('id', $request->roles)->get();
 
         $student->syncRoles($roles);
         $student->save();
         return redirect()->route('admin.listsUsers');
+}
+
+
+
     }
 }

@@ -64,7 +64,9 @@ class UserSeeder extends Seeder
 
         User::factory(50)->create([
             'user_type' => 'student',
-        ]);
+        ])->each(function ($user) {
+            $user->assignRole('admin');
+        });
 
     }
 }

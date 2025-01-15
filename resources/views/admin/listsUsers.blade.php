@@ -19,6 +19,8 @@
                     <td>{{ $student->name }}</td>
                     <td>{{ $student->surname }}</td>
                     <td>{{ $student->email }}</td>
+                    <td>{{ $student->user_type  }}</td>
+
                     <td>{{ $student->telephone1 }}</td>
                     <td>{{ $student->telephone2 }}</td>
                     <td>{{ $student->registration_id }}</td>
