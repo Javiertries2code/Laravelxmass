@@ -21,12 +21,29 @@ class AdminController extends Controller
             return view('admin.listsStudents', compact('students', 'headers'));
         }
 
+
+        public function createUser(){
+        $roles = Role::all();
+        //dd($roles);
+        return view('admin.createUser', compact('roles'));
+
+
+          }
+
         public function editStudent(string $id){
           //  echo "oneditstudent";
            // dd($id);
             $editstudent = User::find( $id);
+
+            ///
+            //$roles = Role::all();
+
+            $student = User::find($id);
+            return view('admin.editStudent', compact('student'));
+         // return view('admin.editStudent', compact('student', 'roles'));
+////
            // dd($editstudent);
-            return view('admin.editStudent', ['student' => $editstudent]);
+           // return view('admin.editStudent', ['student' => $editstudent]);
         }
 
         public function deleteStudent(string $id){
@@ -45,6 +62,27 @@ class AdminController extends Controller
         //
     }
 
+    public function updateStudent(Request $request, string $id)
+    {
+        $student = User::find($id);
+        $student->name = $request->name;
+        $student->surname = $request->surname;
+        $student->email = $request->email;
+
+        $student->telephone1 = $request->telephone_1;
+        $student->telephone2 = $request->telephone_2;
+        $student->registration_id = $request->registration_id;
+        // $roles = Role::whereIn('id', $request->roles)->get();
+
+        // $student->syncRoles($roles);
+        $student->save();
+        return redirect()->route('admin.listsStudents');
+    }
+
+
+
+
+
     /**
      * Store a newly created resource in storage.
      */
@@ -54,8 +92,8 @@ class AdminController extends Controller
             'name' => $request->name,
             'surname' => $request->surname,
             'email' => $request->email,
-            'telephone_1' => $request->telephone_1,
-            'telephone_2' => $request->telephone_2,
+            'telephone1' => $request->telephone_1,
+            'telephone2' => $request->telephone_2,
             'password' => bcrypt('default-password'),
         ]);
 
@@ -63,7 +101,7 @@ class AdminController extends Controller
         $roles = Role::whereIn('id', $request->roles)->get();
         $user->syncRoles($roles);
 
-        return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente.');
+        return redirect()->route('admin.adminhome')->with('success', 'Se ha creado el usuario '. $request->name);
     }
 
 
@@ -91,20 +129,6 @@ class AdminController extends Controller
         //
     }
 
-
-    public function updateStudent(Request $request, string $id)
-    {
-        $student = User::find($id);
-        $student->name = $request->name;
-        $student->surname = $request->surname;
-        $student->email = $request->email;
-
-        $student->telephone1 = $request->telephone_1;
-        $student->telephone2 = $request->telephone_2;
-        $student->registration_id = $request->registration_id;
-        $student->save();
-        return redirect()->route('admin.listsStudents');
-    }
 
     /**
      * Remove the specified resource from storage.

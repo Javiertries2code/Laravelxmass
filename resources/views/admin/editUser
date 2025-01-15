@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<form action="{{ route('admin.updateStudent', $student->id) }}" method="POST">
+<form action="{{ route('admin.updateStudent', $student->id) }}" method="PUT">
     @csrf
     @method('PUT')
     <table class="table">
@@ -40,7 +40,25 @@
                 {{ $student->roles->first()->name ?? 'No tiene rol' }}
             </td>
         </tr>
-       
+        <tr>
+            <th>Rol</th>
+            <td>
+                @foreach ($roles as $role)
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value="{{ $role->id }}"
+                            id="{{ $role->id }}"
+                            name="roles[]"
+                            {{ $student->roles->contains('id', $role->id) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="{{ $role->id }}">
+                            {{ $role->name }}
+                        </label>
+                    </div>
+                @endforeach
+            </td>
+        </tr>
         <tr>
             <td colspan="2">
                 <button type="submit" class="btn btn-primary">Editar</button>
@@ -49,5 +67,3 @@
     </table>
 </form>
 @endsection
-
-

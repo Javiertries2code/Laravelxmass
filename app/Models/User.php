@@ -21,6 +21,19 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use HasRoles;
 
+//esto deberia evitar que se borre el usuario
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            if ($user->hasRole('god')) {
+                abort(403, 'No puedes eliminar un usuario con el rol "god".');
+            }
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *
