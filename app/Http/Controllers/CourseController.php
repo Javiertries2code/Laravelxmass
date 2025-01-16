@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Models\Subject;
 
 class CourseController extends Controller
 {
@@ -28,6 +29,27 @@ class CourseController extends Controller
         Course::create($request->all());
         return $this->redirectCourses();
     }
+    public function storeCoursewitSubject(Request $request)
+    {
+        // Course::create(['name' => $request->name]);
+        $course = [
+            'name' => $request->name,
+          ];
+        $course = Course::create($course);
+
+        $subjects = [
+             $request->subject_1,
+             $request->subject_2,
+             $request->subject_3,
+             $request->subject_4,
+             $request->subject_5,
+             $request->subject_6
+        ];
+
+        $course->subjects()->attach( $subjects);
+
+        return $this->redirectCourses();
+    }
 
     public function editCourse(String $id)
     {
@@ -43,59 +65,21 @@ class CourseController extends Controller
         return $this->redirectCourses();
     }
 
+    public function createCourse()
+    {
+        $headers = [ 'Codigo','Nombre' ];
+        $subjects = Subject::all();
+
+        return view('courses.createCourse', compact( 'headers', 'subjects'));
+    }
+
+
 
     private function redirectCourses()
     {
-        $headers = ['id', 'name', 'description'];
+        $headers = ['id', 'name'];
         $courses = Course::all();
         return view('courses.coursesList', compact('courses', 'headers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Course $course)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Course $course)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Course $course)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Course $course)
-    {
-        //
-    }
 }

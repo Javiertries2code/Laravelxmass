@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SubjectController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,21 +69,36 @@ Route::put('/admin/updateUser/{id}', [AdminController::class, 'updateUser'])->na
 Route::get('admin/editStudent/{id}', [AdminController::class, 'editStudent'])->name('admin.editStudent');
 Route::get('admin/editUser/{id}', [AdminController::class, 'editUser'])->name('admin.editUser');
 
+
+
 ////anadidas mas tarde
 Route::get('admin/roles', [AdminController::class, 'showRoles'])->name('admin.roles');
 Route::delete('admin/roles', [AdminController::class, 'roleDelete'])->name('admin.roledestroy');
-
 Route::post('admin/rolcreate', [AdminController::class, 'storeRole'])->name('admin.rolcreate');
-
 Route::get('students/horarios', [App\Http\Controllers\StudentScheduleController::class, 'show'])->name('students.horarios');
 
-Route::prefix('course')->group(function () {
-    Route::get('coursesList', [CourseController::class, 'coursesList'])->name('course.coursesList');
-    Route::delete('courseDelete/{id}', [CourseController::class, 'courseDelete'])->name('course.courseDelete')->middleware('can:admin');
-    Route::post('storeCourse', [CourseController::class, 'storeCourse'])->name('course.storeCourse');
-    Route::put('updateCourse/{id}', [CourseController::class, 'updateCourse'])->name('course.updateCourse')->middleware('can:admin');
-    Route::get('editCourse/{id}', [CourseController::class, 'editCourse'])->name('course.editCourse')->middleware('can:admin');
-});
+
+
+//
+Route::get('course/coursesList', [CourseController::class, 'coursesList'])->name('course.coursesList');
+    Route::delete('admin/courseDelete/{id}', [CourseController::class, 'courseDelete'])->name('course.courseDelete')->middleware('can:admin');
+    Route::post('admin/storeCourse', [CourseController::class, 'storeCourse'])->name('course.storeCourse')->middleware('can:admin');
+    Route::put('admin/updateCourse/{id}', [CourseController::class, 'updateCourse'])->name('course.updateCourse')->middleware('can:admin');
+    Route::get('admin/editCourse/{id}', [CourseController::class, 'editCourse'])->name('course.editCourse')->middleware('can:admin');
+    Route::get('admin/createCourse', [CourseController::class, 'createCourse'])->name('course.createCourse')->middleware('can:admin');
+
+    //
+
+
+Route::get('subjects/subjectsList', [SubjectController::class, 'subjectsList'])->name('subjects.subjectsList');
+Route::delete('admin/subjectDelete/{id}', [SubjectController::class, 'subjectDelete'])->name('subject.subjectDelete')->middleware('can:admin');
+Route::post('admin/storeSubject', [SubjectController::class, 'storeSubject'])->name('subject.storeSubject')->middleware('can:admin');
+Route::put('admin/updateSubject/{id}', [SubjectController::class, 'updateSubject'])->name('subject.updateSubject')->middleware('can:admin');
+Route::get('admin/editSubject/{id}', [SubjectController::class, 'editSubject'])->name('subject.editSubject')->middleware('can:admin');
+Route::get('admin/createSubject', [SubjectController::class, 'createSubject'])->name('subject.createSubject')->middleware('can:admin');
+
+
+
 
 
 

@@ -7,59 +7,51 @@ use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    public function subjectsList()
+{
+    return $this->redirectSubjects();
+}
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+public function subjectDelete(Request $request)
+{
+    Subject::where('id', $request->id)->delete();
+    return $this->redirectSubjects();
+}
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Subject $subject)
-    {
-        //
-    }
+public function createSubject()
+{
+    $headers = ['Horas' , 'Codigo'];
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Subject $subject)
-    {
-        //
-    }
+    return view('subjects.createSubject', compact( 'headers'));
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Subject $subject)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Subject $subject)
-    {
-        //
-    }
+public function storeSubject(Request $request)
+{
+    Subject::create($request->all());
+    return $this->redirectSubjects();
+}
+
+public function editSubject(String $id)
+{
+    $subject = Subject::findOrFail($id);
+    return view('subjects.editSubject', compact('subject'));
+}
+
+public function updateSubject(Request $request)
+{
+    $subject = Subject::findOrFail($request->id);
+    $subject->update($request->all());
+    return $this->redirectSubjects();
+}
+
+
+private function redirectSubjects()
+{
+    $headers = ['id', 'hours', 'code'];
+    $subjects = Subject::all();
+    return view('subjects.subjectsList', compact('subjects', 'headers'));
+}
+
 }

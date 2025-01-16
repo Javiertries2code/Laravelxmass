@@ -14,11 +14,11 @@ class Meeting extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function user(): BelongsToMany{
+    public function user(): BelongsTo{
         return $this->belongsTo(User::class);
     }
 
 
-    
+
 
 }

@@ -40,6 +40,17 @@
                 </div>
             </div>
         </div>
+
+<div class="col-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Asignaturas</h5>
+            <p class="card-text">Ver asignaturas</p>
+            <a href="{{ route('subjects.subjectsList') }}" class="btn btn-primary">Ver asignaturas</a>
+        </div>
+    </div>
+</div>
+
     </div>
 </div>
 

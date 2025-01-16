@@ -1,8 +1,8 @@
-
+/*************  ✨ Codeium Command ⭐  *************/
 @extends('layouts.app')
 
 @section('content')
-    <h1>Lista de cursos</h1>
+    <h1>Lista de asignaturas</h1>
     <table class="table">
         <thead>
             <tr>
@@ -12,20 +12,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($courses as $course)
+            @foreach($subjects as $subject)
             <tr>
-                <td>{{ $course->id }}</td>
-                <td>{{ $course->name }}</td>
-                <td>{{ $course->description }}</td>
+                <td>{{ $subject->id }}</td>
+                <td>{{ $subject->code }}</td>
+                <td>{{ $subject->hours }}</td>
                 <td>
-                    <form action="{{ route('course.courseDelete', $course->id) }}" method="POST">
+                    <form action="{{ route('subject.subjectDelete', $subject->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
                 </td>
                 <td>
-                    <form action="{{ route('course.editCourse', $course->id) }}" method="GET">
+                    <form action="{{ route('subject.editSubject', $subject->id) }}" method="GET">
                         <button type="submit" class="btn btn-primary">Editar</button>
                     </form>
                 </td>
@@ -34,9 +34,8 @@
         </tbody>
     </table>
     <div class="mt-4">
-        <a href="{{ route('course.createCourse') }}" class="btn btn-success">Crear nuevo curso</a>
+        <a href="{{ route('subject.createSubject') }}" class="btn btn-success">Crear nueva asignatura</a>
     </div>
-
-
-
 @endsection
+
+/******  65896239-92c2-479b-83ff-ac326d9bf2ef  *******/
