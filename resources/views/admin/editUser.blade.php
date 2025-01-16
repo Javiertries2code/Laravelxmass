@@ -44,6 +44,9 @@
             <th>Rol</th>
             <td>
                 @foreach ($roles as $role)
+              
+
+{{-- trying to make it appear only if the role is god, ans user is god 1 --}}
                     <div class="form-check">
                         <input
                             class="form-check-input"
@@ -56,6 +59,8 @@
                             {{ $role->name }}
                         </label>
                     </div>
+
+
                 @endforeach
             </td>
         </tr>

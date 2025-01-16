@@ -35,19 +35,13 @@ class TeacherController extends Controller
 
     public function teachers()
     {
-        $teachers = User::where('user_type', 'teacher')->get();
-       // dd($teachers);
+        $students = User::where('user_type', 'teacher')->get();
+        $headers = ['id', 'Nombre', 'Apellido', 'Email', 'tipo de usuario', 'Telefono 1'];
 
-        foreach($teachers as $teacher)
-        {
-            echo $teacher->name . "<br>";
-            echo $teacher->surname . "<br>";
-            echo $teacher->email . "<br><br>";
-
-        }
+       return view('teacher.teachersList', compact('students', 'headers'));
     }
 
-    
+
 
     public function showOne(string $teacher_id)
     {

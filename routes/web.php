@@ -6,16 +6,17 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CourseController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-
-
-
 Auth::routes();
+
+
+
+
+
 
 //meter aqui todas las rutas al crear toles****************************
 
@@ -45,12 +46,17 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
+Route::get('/myhome', [App\Http\Controllers\MyHomeController::class, 'goHome'])->name('gohome');
+Route::get('/', [App\Http\Controllers\MyHomeController::class, 'goHome'])->name('home');
+
 
 
 
 Route::get('student/studenthome', [App\Http\Controllers\AdminController::class, 'studenthome'])->name('student.studenthome');
 Route::get('teacher/teacherhome', [App\Http\Controllers\AdminController::class, 'teacherhome'])->name('teacher.teacherhome');
+
 Route::get('admin/adminhome', [App\Http\Controllers\AdminController::class, 'adminhome'])->name('admin.adminhome');
+
 Route::post('admin/storeNewUser', [App\Http\Controllers\AdminController::class, 'storeNewUser'])->name('admin.storeNewUser');
 Route::get('admin/createUser', [App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.createUser');
 Route::get('admin/listsStudents', [App\Http\Controllers\AdminController::class, 'listsStudents'])->name('admin.listsStudents');
@@ -68,9 +74,15 @@ Route::delete('admin/roles', [AdminController::class, 'roleDelete'])->name('admi
 
 Route::post('admin/rolcreate', [AdminController::class, 'storeRole'])->name('admin.rolcreate');
 
-
-
 Route::get('students/horarios', [App\Http\Controllers\StudentScheduleController::class, 'show'])->name('students.horarios');
+
+Route::prefix('course')->group(function () {
+    Route::get('coursesList', [CourseController::class, 'coursesList'])->name('course.coursesList');
+    Route::delete('courseDelete/{id}', [CourseController::class, 'courseDelete'])->name('course.courseDelete')->middleware('can:admin');
+    Route::post('storeCourse', [CourseController::class, 'storeCourse'])->name('course.storeCourse');
+    Route::put('updateCourse/{id}', [CourseController::class, 'updateCourse'])->name('course.updateCourse')->middleware('can:admin');
+    Route::get('editCourse/{id}', [CourseController::class, 'editCourse'])->name('course.editCourse')->middleware('can:admin');
+});
 
 
 
@@ -98,9 +110,9 @@ Route::get('/meeting/showOne/{meeting_id}', [App\Http\Controllers\MeetingControl
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

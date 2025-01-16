@@ -10,9 +10,45 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function coursesList()
     {
-        //
+        return $this->redirectCourses();
+
+    }
+
+    public function courseDelete(Request $request)
+    {
+        Course::where('id', $request->id)->delete();
+        return $this->redirectCourses();
+    }
+
+    public function storeCourse(Request $request)
+    {
+        // Course::create(['name' => $request->name]);
+        Course::create($request->all());
+        return $this->redirectCourses();
+    }
+
+    public function editCourse(String $id)
+    {
+
+        $course = Course::findOrFail($id);
+        return view('courses.editCourse', compact('course'));
+
+    }
+    public function updateCourse(Request $request)
+    {
+        $course = Course::findOrFail($request->id);
+        $course->update($request->all());
+        return $this->redirectCourses();
+    }
+
+
+    private function redirectCourses()
+    {
+        $headers = ['id', 'name', 'description'];
+        $courses = Course::all();
+        return view('courses.coursesList', compact('courses', 'headers'));
     }
 
     /**

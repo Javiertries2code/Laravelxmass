@@ -1,7 +1,7 @@
 
 @extends('layouts.app')
 @section('content')
-    <h1>Lista de usuarios</h1>
+    <h1>Lista de Profesores</h1>
     {{-- probando tabla cebreada --}}
     <table class="table table-striped">
         <thead>
@@ -19,33 +19,32 @@
                     <td>{{ $student->name }}</td>
                     <td>{{ $student->surname }}</td>
                     <td>{{ $student->email }}</td>
-                    <td>{{ $student->user_type  }}</td>
-
                     <td>{{ $student->telephone1 }}</td>
                     <td>{{ $student->telephone2 }}</td>
                     {{-- <td>{{ $student->registration_id }}</td> --}}
 
+
+                    @if(auth()->user()->can('admin'))
                     <td>
                         <!-- Botón para eliminar -->
-                        <form action="{{ route('admin.deleteUser', ['id' => $student->id]) }}" method="POST" style="display: inline-block;">
+                        <form action="{{ route('admin.deleteStudent', ['id' => $student->id]) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Está seguro de eliminar este usuario? {{ $student->id }}?')">
+                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Está seguro de eliminar al estudiante {{ $student->id }}?')">
                                 Eliminar
                             </button>
                         </form>
 
                         <!-- Botón para editar -->
-                        <form action="{{ route('admin.editUser', ['id' => $student->id]) }}" method="GET" style="display: inline-block;">
+                        <form action="{{ route('admin.editStudent', ['id' => $student->id]) }}" method="GET" style="display: inline-block;">
                             <button class="btn btn-sm btn-warning" type="submit">
                                 Editar
                             </button>
                         </form>
                     </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>
     </table>
-    {{-- <div>    {{ $students->links() }} --}}
-    </div>
 @endsection

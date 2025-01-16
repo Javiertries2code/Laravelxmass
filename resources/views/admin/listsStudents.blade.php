@@ -9,7 +9,7 @@
                 @foreach($headers as $header)
                     <th>{{ $header }}</th>
                 @endforeach
-                <th>Acciones</th>
+
             </tr>
         </thead>
         <tbody>
@@ -23,6 +23,7 @@
                     <td>{{ $student->telephone2 }}</td>
                     <td>{{ $student->registration_id }}</td>
 
+   @if(auth()->user()->can('admin'))
                     <td>
                         <!-- Botón para eliminar -->
                         <form action="{{ route('admin.deleteStudent', ['id' => $student->id]) }}" method="POST" style="display: inline-block;">
@@ -40,8 +41,10 @@
                             </button>
                         </form>
                     </td>
+                   @endif
                 </tr>
             @endforeach
         </tbody>
     </table>
+    <div>  {{ $students->links() }}</div>
 @endsection
