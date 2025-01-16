@@ -87,6 +87,8 @@ Route::get('course/coursesList', [CourseController::class, 'coursesList'])->name
     Route::get('admin/editCourse/{id}', [CourseController::class, 'editCourse'])->name('course.editCourse')->middleware('can:admin');
     Route::get('admin/createCourse', [CourseController::class, 'createCourse'])->name('course.createCourse')->middleware('can:admin');
 
+    // Route::post('admin/storeCoursewithsubject', [CourseController::class, 'storeCoursewithSubject'])->name('course.storeCoursewithsubject')->middleware('can:admin');
+    Route::post('admin/storeCoursewithsubject', [CourseController::class, 'storeCoursewithSubject'])->name('course.storeCoursewithsubject')->middleware('can:admin');
     //
 
 

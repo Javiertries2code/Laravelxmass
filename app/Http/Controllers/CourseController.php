@@ -29,7 +29,7 @@ class CourseController extends Controller
         Course::create($request->all());
         return $this->redirectCourses();
     }
-    public function storeCoursewitSubject(Request $request)
+    public function storeCoursewithSubject(Request $request)
     {
         // Course::create(['name' => $request->name]);
         $course = [
@@ -38,12 +38,12 @@ class CourseController extends Controller
         $course = Course::create($course);
 
         $subjects = [
-             $request->subject_1,
-             $request->subject_2,
-             $request->subject_3,
-             $request->subject_4,
-             $request->subject_5,
-             $request->subject_6
+             $request->subject1,
+             $request->subject2,
+             $request->subject3,
+             $request->subject4,
+             $request->subject5,
+             $request->subject6
         ];
 
         $course->subjects()->attach( $subjects);

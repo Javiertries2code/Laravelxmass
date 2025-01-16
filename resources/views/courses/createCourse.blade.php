@@ -1,36 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-/*************  ✨ Codeium Command ⭐  *************/
-<div class="container">
-    <h1>Crear Curso</h1>
+    <h1>Crear nuevo curso</h1>
     <form action="{{ route('course.storeCourse') }}" method="POST">
         @csrf
-        <table class="table">
-            <thead>
-                <tr>
-                    @foreach($headers as $header)
-                        <th>{{ $header }}</th>
-                    @endforeach
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-
-                    <td>
-                        <input type="text" class="form-control" name="name" placeholder="Nombre">
-                    </td>
-                    <td>
-                        <input type="text" class="form-control" name="code" placeholder="Código">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="form-group">
+            <label for="">Codigo</label>
+            <input type="text" class="form-control" name="code" placeholder="Codigo">
+        </div>
+        <div class="form-group">
+            <label for="">Nombre</label>
+            <input type="text" class="form-control" name="name" placeholder="Nombre">
+        </div>
+        <div class="form-group">
+            <label for="">Elija maximo de 6 Asignaturas</label>
+            <div class="d-flex flex-wrap">
+                @for ($i = 0; $i < 6; $i++)
+                    <div class="form-group m-2">
+                        <input type="text" class="form-control" placeholder="Subject{{ $i + 1 }}">
+                    </div>
+                @endfor
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
+        <ul>
+            @foreach ($subjects as $subject)
+                <li>{{ $subject->code }}</li>
+            @endforeach
+        </ul>
+
     </form>
-</div>
-
-/******  28feae1b-1eff-4050-9824-58c930c6348d  *******/
-
 @endsection
 
