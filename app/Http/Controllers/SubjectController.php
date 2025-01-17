@@ -19,7 +19,7 @@ public function subjectDelete(Request $request)
     return $this->redirectSubjects();
 }
 
-public function createSubject()
+public function createSubjec()
 {
     $headers = ['Horas' , 'Codigo'];
 

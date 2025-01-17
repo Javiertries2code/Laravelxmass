@@ -29,6 +29,17 @@ class MeetingController extends Controller
     }
 
     /**
+     * Show the meetings of the authenticated user.
+     */
+    public function mymeetings()
+    {
+        $meetings = Meeting::where('teacher_id', auth()->user()->id)
+            ->orWhere('student_id', auth()->user()->id)
+            ->get();
+        return view('meeting.mymeetings', compact('meetings'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)

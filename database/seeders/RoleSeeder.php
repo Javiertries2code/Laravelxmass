@@ -25,6 +25,7 @@ Permission::create(['name' => 'god'])->assignRole(($rolegod));;
 Permission::create(['name' => 'admin'])->syncRoles([$rolegod, $roleadmin]);
 
 Permission::create(['name' => 'teacher'])->syncRoles([$rolegod, $roleadmin,$roleteacher]);
+//aint sure i gonna need anytime a teacher accesing student info.
 Permission::create(['name' => 'student'])->syncRoles([$rolegod, $roleadmin,$rolestudent]);
 
 
