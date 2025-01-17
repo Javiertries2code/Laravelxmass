@@ -16,7 +16,7 @@ class CourseSeeder extends Seeder
     public function run(): void
     {
 
-        $list_subjects = [
+        $courses = [
             ['code' => 'curso 1', 'name' => "DAM"],
             ['code' => 'curso 2', 'name' => "DAO"],
             ['code' => 'curso 3', 'name' => "Sistemas"],
@@ -24,9 +24,17 @@ class CourseSeeder extends Seeder
             ['code' => 'curso 5', 'name' => "Cyber Seguridad"]
         ];
 
-        DB::table('courses')->insert($list_subjects);
 
 
+        DB::table('courses')->insert($courses);
 
-    }
+        $courses = Course::all();
+        $subjects = \App\Models\Subject::all();
+
+        // foreach ($courses as $course) {
+        //     $coursesubjects = $subjects->random(6);
+        //     $course->subjects()->attach($coursesubjects);
+        // }
+
+}
 }

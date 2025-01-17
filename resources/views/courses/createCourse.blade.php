@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Crear nuevo curso</h1>
-    <form action="{{ route('course.storeCourse') }}" method="POST">
+    <form action="{{ route('course.storeCoursewithsubject') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="">Codigo</label>
@@ -12,23 +12,22 @@
             <label for="">Nombre</label>
             <input type="text" class="form-control" name="name" placeholder="Nombre">
         </div>
-        <div class="form-group">
-            <label for="">Elija maximo de 6 Asignaturas</label>
-            <div class="d-flex flex-wrap">
-                @for ($i = 0; $i < 6; $i++)
-                    <div class="form-group m-2">
-                        <input type="text" class="form-control" placeholder="Subject{{ $i + 1 }}">
-                    </div>
-                @endfor
-            </div>
+        @for ($i = 1; $i <= 6; $i++)
+        <div class="form-group mb-3">
+            <label for="subject{{ $i }}" class="form-label">Asignatura {{ $i }}</label>
+            <select class="form-control" id="subject{{ $i }}" name="subject{{ $i }}" required>
+                <option value="">Seleccione una asignatura</option>
+                @foreach($subjects as $subject)
+                    <option value="{{ $subject->id }}">{{ $subject->code }}</option>
+                @endforeach
+            </select>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-        <ul>
-            @foreach ($subjects as $subject)
-                <li>{{ $subject->code }}</li>
-            @endforeach
-        </ul>
+        @endfor
 
+
+
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 @endsection
 

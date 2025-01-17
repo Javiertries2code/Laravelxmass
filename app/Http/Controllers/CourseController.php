@@ -26,6 +26,7 @@ class CourseController extends Controller
     public function storeCourse(Request $request)
     {
         // Course::create(['name' => $request->name]);
+
         Course::create($request->all());
         return $this->redirectCourses();
     }
@@ -34,6 +35,7 @@ class CourseController extends Controller
         // Course::create(['name' => $request->name]);
         $course = [
             'name' => $request->name,
+            'code'=> $request->code,
           ];
         $course = Course::create($course);
 
@@ -46,7 +48,7 @@ class CourseController extends Controller
              $request->subject6
         ];
 
-        $course->subjects()->attach( $subjects);
+        $course->subjects()->attach($subjects);
 
         return $this->redirectCourses();
     }
@@ -69,7 +71,6 @@ class CourseController extends Controller
     {
         $headers = [ 'Codigo','Nombre' ];
         $subjects = Subject::all();
-
         return view('courses.createCourse', compact( 'headers', 'subjects'));
     }
 
@@ -78,7 +79,7 @@ class CourseController extends Controller
     private function redirectCourses()
     {
         $headers = ['id', 'name'];
-        $courses = Course::all();
+        $courses = Course::all()->load('subjects');
         return view('courses.coursesList', compact('courses', 'headers'));
     }
 
