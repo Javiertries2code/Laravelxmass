@@ -8,15 +8,18 @@
             enctype="multipart/form-data">
             @csrf
 
+<div class="form-group mb-3">
+    <label for="alumno_email" class="form-label">Email Alumno</label>
+    <input type="email" class="form-control" id="alumno_email" name="alumno_email" value="{{ auth()->user()->email }}" placeholder="{{ auth()->user()->email }}" required />
+</div>
             <div class="form-group mb-3">
-                <label for="alumno_email" class="form-label">Email Alumno</label>
-                <input type="email" class="form-control" id="alumno_email" name="alumno_email" required />
-
-            </div>
-            <div class="form-group mb-3">
-                <label for="teacher_email" class="form-label">Email Profesor</label>
-                <input type="email" class="form-control" id="teacher_email" name="teacher_email" required />
-
+                <label for="teacher_email" class="form-label">Profesor</label>
+                <select class="form-control" id="teacher_email" name="teacher_email" required>
+                    <option value="">Seleccione un profesor</option>
+                    @foreach ($teachers as $teacher)
+                    <option value="{{ $teacher->email }}">{{ $teacher->name }} {{ $teacher->surname }} ({{ $teacher->email }})</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group mb-3">
                 <label for="dia" class="form-label">Dia</label>

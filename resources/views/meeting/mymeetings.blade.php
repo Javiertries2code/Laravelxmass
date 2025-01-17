@@ -5,9 +5,9 @@
 <table>
     <thead>
         <tr>
-            <th>Meeting ID</th>
-            <th>Day of the Week</th>
-            <th>Time</th>
+            <th>Meeting id</th>
+            <th>Dia Semana</th>
+            <th>Hora</th>
             <th>Teacher</th>
             <th>Student</th>
         </tr>

@@ -25,7 +25,10 @@ class MeetingController extends Controller
      */
     public function create()
     {
-        return view('meeting.newmeeting');
+        $teachers = User::where('user_type', 'teacher')->get();
+        $authUser = auth()->user();
+
+        return view('meeting.newmeeting', compact('teachers', 'authUser'));
     }
 
     /**
@@ -62,7 +65,7 @@ class MeetingController extends Controller
         $meeting->student_id = $student->first()->id;
         //$meeting->publicado = $request->has('publicado');
         $meeting->save();
-        return redirect()->route('meeting.index');
+        return redirect()->route('meeting.mymeetings');
     }
 
     /**
