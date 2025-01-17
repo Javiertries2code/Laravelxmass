@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Schedule::class)->constrained()->cascadeOnDelete();
-
+            $table->softDeletes();
         });
     }
 

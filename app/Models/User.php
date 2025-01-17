@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongstoMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
@@ -19,6 +20,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    //use SoftDeletes;
     use HasRoles;
 
 //esto deberia evitar que se borre el usuario

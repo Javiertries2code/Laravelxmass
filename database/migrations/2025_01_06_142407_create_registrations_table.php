@@ -24,8 +24,8 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete();
             $table->date('day');
-           // $table->boolean('status');
-            $table->timestamps();
+            $table->softDeletes();
+               $table->timestamps();
         });
     }
 

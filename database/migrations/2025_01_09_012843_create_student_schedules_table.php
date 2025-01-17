@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('student_schedules', function (Blueprint $table) {
             $table->id();
             $table->string('day_week');
+            $table->softDeletes();
 
 
             $table->unsignedBigInteger('course_id')->nullable();

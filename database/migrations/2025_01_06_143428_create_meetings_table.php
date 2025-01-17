@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('day_week');//as ain sure if i gotta set the meeting based on calendar or day of the week
             $table->time('hour');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

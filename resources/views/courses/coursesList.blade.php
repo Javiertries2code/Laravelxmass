@@ -18,6 +18,14 @@
                 <td>{{ $course->name }}</td>
                 <td>{{ $course->description }}</td>
                 <td>
+                    <select class="form-select">
+                        @foreach($course->subjects as $subject)
+                        <option>Asignaturas</option>
+                            <option>{{ $subject->code }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td>
                     <form action="{{ route('course.courseDelete', $course->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
