@@ -28,13 +28,13 @@ class TeacherScheduleSeeder extends Seeder
 
         foreach ($teachers as $teacherId) {
 
-            echo $teacherId;
+            // echo $teacherId;
 
 
             $assignedCourses = $courses->shuffle()->take(3);
 
             foreach ($days as $day) {
-                echo $day;
+               // echo $day;
 
 
                 // This sould be taken all the subjects of those 3 courses, and shuffle
@@ -44,10 +44,9 @@ class TeacherScheduleSeeder extends Seeder
 
 
                 //testing
-                echo $teacherId."teacher";
-                echo $assignedSubjects[0]->id."subject";
+                //cho $assignedSubjects[0]->id."subject";
 
-                
+
                 $schedule = [
                     'user_id' => $teacherId,
                     //'user_id' => null,

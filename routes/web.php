@@ -79,21 +79,23 @@ Route::get('students/horarios', [App\Http\Controllers\StudentScheduleController:
 Route::get('/teacher/horario', [App\Http\Controllers\TeacherController::class, 'teachers'])->name('teacherHoraio');
 
 
- Route::get('/teacher/teachersList', [App\Http\Controllers\TeacherController::class, 'teachers'])->name('teachersList');
+Route::get('/teacher/teachersList', [App\Http\Controllers\TeacherController::class, 'teachers'])->name('teachersList');
 
- Route::get('/teacher/showOne/{teacher_id}', [App\Http\Controllers\TeacherController::class, 'showOne'])->name('showOneteacher');
+Route::get('/teacher/showOne/{teacher_id}', [App\Http\Controllers\TeacherController::class, 'showOne'])->name('showOneteacher');
 
 
 /// Routes mmeting
 Route::get('/meeting/newmeeting', [App\Http\Controllers\MeetingController::class, 'create'])->name('newmeeting');
 //Route::post('meetings.store', [App\Http\Controllers\MeetingController::class, 'store'])->name('meetings.store');
 
- Route::post('meetings.store', [App\Http\Controllers\MeetingController::class, 'store'])->name('meetings.store')->middleware([ 'can:student']);
+Route::post('meetings.store', [App\Http\Controllers\MeetingController::class, 'store'])->name('meetings.store')->middleware(['can:student']);
 Route::get('/meeting/allmeetings', [App\Http\Controllers\MeetingController::class, 'index'])->name('meeting.index')->middleware(['can:admin']);;
 Route::get('/meeting/showOne/{meeting_id}', [App\Http\Controllers\MeetingController::class, 'showOne'])->name('showOne')->middleware(['can:teacher', 'can:student']);
 
 Route::get('/meeting/mymeetings', [App\Http\Controllers\MeetingController::class, 'mymeetings'])->name('meeting.mymeetings');
 
+
+Route::get('/students/studenthome', [App\Http\Controllers\AdminController::class, 'studenthome'])->name('studenthome')->middleware('can:student');
 
 Auth::routes();
 

@@ -1,4 +1,3 @@
-/*************  ✨ Codeium Command ⭐  *************/
 @extends('layouts.app')
 
 @section('content')
@@ -38,4 +37,3 @@
     </div>
 @endsection
 
-/******  65896239-92c2-479b-83ff-ac326d9bf2ef  *******/

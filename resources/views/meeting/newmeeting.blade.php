@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    {{ var_dump(request()->all()) }}
+   
 
 
     <div class="container">

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use App\Models\Registration;
+use App\Models\Course;
+use App\Models\Subject;
 
 class AdminController extends Controller
 {
@@ -41,9 +44,32 @@ class AdminController extends Controller
 
     public function listsUsers()
     {
-        $students = User::all();
-        $headers = ['id', 'Nombre', 'Apellido', 'Email', 'tipo de usuario', 'Telefono 1', 'Telefono 2', 'ID de Matricula'];
-        return view('admin.listsUsers', compact('students', 'headers'));
+        $data = User::all();
+        foreach ($data as $user) {
+            $roles = $user->getRoleNames()->toArray(); // [ 'god', 'teacher', 'student' ]
+            $user->roles_to_str = '';
+            foreach ($roles as $i => $role) {
+                $role =  $role === 'god' ? "<b class='text-danger'>GOD</b>" : $role;
+                $user->roles_to_str = $user->roles_to_str . $role . ', ';
+            }
+        }
+        $headers = [
+            'id' => 'id',
+            'name' => 'Nombre',
+            'surname' => 'Apellido',
+            'email' => 'Email',
+            'user_type' => 'Tipo de usuario',
+            'roles_to_str' => 'Roles',
+            'telephone1' => 'Telefono 1',
+            'telephone2' => 'Telefono 2',
+        ];
+        $actions = [
+            'delete' => 'admin.deleteUser',
+            'edit' => 'admin.editUser',
+        ];
+
+        $title = 'Listado de Usuarios';
+        return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
     }
 
     public function editUser(string $id)
@@ -86,12 +112,10 @@ class AdminController extends Controller
             return redirect()->route('admin.listsUsers')->with('error', 'No se puede eliminar el usuario con rol god');
         }
         $student->delete();
-        return redirect()->route('admin.listsUsers');
+        return redirect()->route('admin.listsUsers')->with('success', 'El usuario ha sido eliminado correctamente.');
     }
 
-    public function create()
-    {
-    }
+    public function create() {}
 
     public function storeNewUser(Request $request)
     {
@@ -144,12 +168,49 @@ class AdminController extends Controller
 
     public function adminhome()
     {
-        return view('admin.adminhome');
+        // Le pasamos todas cards con boxes y en la vista los iteramos
+        $data = [
+            [
+                'title' => 'Cursos',
+                'text' => 'Ver cursos',
+                'route' => route('course.coursesList')
+            ],
+            [
+                'title' => 'Usuarios',
+                'text' => 'Ver usuarios',
+                'route' => route('admin.listsUsers')
+            ],
+            [
+                'title' => 'Estudiantes',
+                'text' => 'Ver estudiantes',
+                'route' => route('admin.listsStudents')
+            ],
+            [
+                'title' => 'Roles',
+                'text' => 'Ver roles',
+                'route' => route('admin.roles')
+            ],
+            [
+                'title' => 'Asignaturas',
+                'text' => 'Ver asignaturas',
+                'route' => route('subjects.subjectsList')
+            ]
+        ];
+
+        return view('admin.adminhome', compact('data'));
+
     }
 
     public function studenthome()
     {
-        return view('student.studenthome');
+        $user = auth()->user();
+        $courses_ids = Registration::where('student_id', $user->id)->get()->pluck('course_id');
+
+        $courses = Course::all()->where('id', $courses_ids[0])->load('subjects');
+
+
+
+        return view('student.studenthome', compact('user', 'courses'));
     }
 
     public function teacherhome()

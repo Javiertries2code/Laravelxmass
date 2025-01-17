@@ -65,6 +65,11 @@ class User extends Authenticatable
     }
 
 
+    public function subjects(): HasManyThrough {
+        return $this->hasManyThrough(Subject::class, Registration::class, 'user_id', 'course_id', 'id', 'id')
+            ->wherePivot('active', 1);
+    }
+
 
    // existe la opcion return $this->hasManyThrough(Subject::class,... para llegar a la conexion de por ejemplo, subjects por profe
 
