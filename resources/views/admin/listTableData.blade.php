@@ -54,6 +54,10 @@
             </table>
         </div>
         {{-- <div>    {{ $data->links() }} --}}
+        <div class="mt-5 d-flex justify-content-center">
+            {{ $data->links() }}
+        </div>
+
     </div>
 @endsection
 

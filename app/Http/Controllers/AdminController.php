@@ -44,7 +44,8 @@ class AdminController extends Controller
 
     public function listsUsers()
     {
-        $data = User::all();
+        $currentPage = request()->query('page', 1);
+        $data = User::paginate(15, ['*'], 'page', $currentPage);
         foreach ($data as $user) {
             $roles = $user->getRoleNames()->toArray(); // [ 'god', 'teacher', 'student' ]
             $user->roles_to_str = '';
@@ -169,33 +170,7 @@ class AdminController extends Controller
     public function adminhome()
     {
         // Le pasamos todas cards con boxes y en la vista los iteramos
-        $data = [
-            [
-                'title' => 'Cursos',
-                'text' => 'Ver cursos',
-                'route' => route('course.coursesList')
-            ],
-            [
-                'title' => 'Usuarios',
-                'text' => 'Ver usuarios',
-                'route' => route('admin.listsUsers')
-            ],
-            [
-                'title' => 'Estudiantes',
-                'text' => 'Ver estudiantes',
-                'route' => route('admin.listsStudents')
-            ],
-            [
-                'title' => 'Roles',
-                'text' => 'Ver roles',
-                'route' => route('admin.roles')
-            ],
-            [
-                'title' => 'Asignaturas',
-                'text' => 'Ver asignaturas',
-                'route' => route('subjects.subjectsList')
-            ]
-        ];
+        $data = self::getCardsForDashboard();
 
         return view('admin.adminhome', compact('data'));
 
@@ -216,5 +191,40 @@ class AdminController extends Controller
     public function teacherhome()
     {
         return view('teacher.teacherhome');
+    }
+
+    public static function getCardsForDashboard() {
+        return [
+            [
+                'icon' => 'bi bi-book',
+                'title' => 'Cursos',
+                'text' => 'Ver cursos',
+                'route' => route('course.coursesList')
+            ],
+            [
+                'icon' => 'bi bi-person',
+                'title' => 'Usuarios',
+                'text' => 'Ver usuarios',
+                'route' => route('admin.listsUsers')
+            ],
+            [
+                'icon' => 'bi bi-people',
+                'title' => 'Estudiantes',
+                'text' => 'Ver estudiantes',
+                'route' => route('admin.listsStudents')
+            ],
+            [
+                'icon' => 'bi bi-gear',
+                'title' => 'Roles',
+                'text' => 'Ver roles',
+                'route' => route('admin.roles')
+            ],
+            [
+                'icon' => 'bi bi-calendar-event',
+                'title' => 'Reuniones',
+                'text' => 'Ver reuniones',
+                'route' => route('meeting.index')
+            ]
+        ];
     }
 }

@@ -53,7 +53,7 @@ protected function authenticated($request, $user)
             case 'student':
                 return redirect('/student/studenthome');
             default:
-                return redirect('/home');
+                return redirect('/student/studenthome');
         }
     }
 ///
@@ -65,8 +65,7 @@ protected function authenticated($request, $user)
         if (auth()->check()) {
             $user = auth()->user();
 
-            $role = $user->getRoleNames()->first();
-         dd($role);
+            $role = $user->type_user;
             switch ($role) {
                 case 'god':
                     return '/admin/adminhome';
@@ -77,7 +76,7 @@ protected function authenticated($request, $user)
                 case 'student':
                     return '/student/studenthome';
                 default:
-                    return '/home';
+                    return '/student/studenthome';
             }
        }
 

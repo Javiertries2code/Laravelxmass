@@ -1,7 +1,10 @@
+
+{{-- We dont use thos one , Mirar listTableData.blade.php --}}
+
 @extends('layouts.app')
 @section('content')
     <h1>Lista de usuarios</h1>
-   
+
 
     {{-- probando tabla cebreada --}}
     <table class="table table-striped">
