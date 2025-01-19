@@ -99,7 +99,7 @@ Route::get('/meeting/showOne/{meeting_id}', [App\Http\Controllers\MeetingControl
 Route::get('/meeting/mymeetings', [App\Http\Controllers\MeetingController::class, 'mymeetings'])->name('meeting.mymeetings');
 
 
-// Route::get('/student/studenthome', [App\Http\Controllers\AdminController::class, 'studentHome'])->name('studenthome');
+Route::get('/student/studenthome', [App\Http\Controllers\AdminController::class, 'studentHome'])->name('studenthome');
 
 Auth::routes();
 

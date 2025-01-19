@@ -20,7 +20,7 @@
             </div>
         @endif
 
-        @include('partials.tableData', ['headers' => $headers, 'data' => $data])
+        @include('partials.tableData', ['headers' => $headers, 'data' => $data, 'actions' => $actions])
 
 
         @if (isset($actions['create']))

@@ -102,8 +102,8 @@ class AdminController extends Controller
                 return $role->name != 'god';
             });
         }
-        $student = User::find($id);
-        return view('admin.editUser', compact('student', 'roles'));
+        $user = User::find($id);
+        return view('admin.editUser', compact('user', 'roles'));
     }
 
     public function createUser()
@@ -152,8 +152,8 @@ class AdminController extends Controller
             'surname' => $request->surname,
             'email' => $request->email,
             'user_type' => $request->user_type,
-            'telephone1' => $request->telephone_1,
-            'telephone2' => $request->telephone_2,
+            'telephone1' => $request->telephone1,
+            'telephone2' => $request->telephone2,
             'registration_id' => $request->registration_id,
             'password' => Hash::make('password'),
         ]);
@@ -163,12 +163,13 @@ class AdminController extends Controller
     }
     public function updateStudent(Request $request, string $id)
     {
+
         $student = User::find($id);
         $student->name = $request->name;
         $student->surname = $request->surname;
         $student->email = $request->email;
-        $student->telephone1 = $request->telephone_1;
-        $student->telephone2 = $request->telephone_2;
+        $student->telephone1 = $request->telephone1;
+        $student->telephone2 = $request->telephone2;
         $student->registration_id = $request->registration_id;
         $student->save();
         return redirect()->route('admin.listsStudents')->with('success', 'El estudiante ha sido actualizado correctamente.');
@@ -179,8 +180,8 @@ class AdminController extends Controller
         $student->name = $request->name;
         $student->surname = $request->surname;
         $student->email = $request->email;
-        $student->telephone1 = $request->telephone_1;
-        $student->telephone2 = $request->telephone_2;
+        $student->telephone1 = $request->telephone1;
+        $student->telephone2 = $request->telephone2;
         $student->registration_id = $request->registration_id;
         if ($student->user_type == 'student' || null == $request->roles) {
             return redirect()->route('admin.listsUsers')->with('success', 'El usuario ha sido actualizado correctamente.');
@@ -206,7 +207,7 @@ class AdminController extends Controller
         $user = auth()->user();
         $courses_ids = Registration::where('student_id', $user->id)->get()->pluck('course_id');
 
-        $courses = Course::all()->where('id', $courses_ids[0])->load('subjects');
+        $courses = []; //Course::all()->where('id', $courses_ids[0])->load('subjects');
 
 
 

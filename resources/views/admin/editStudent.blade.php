@@ -25,13 +25,13 @@
         <tr>
             <th>Telefono 1</th>
             <td>
-                <input type="text" class="form-control" id="telephone_1" name="telephone_1" value="{{ $student->telephone_1 }}" placeholder="Telefono 1">
+                <input type="text" class="form-control" id="telephone1" name="telephone1" value="{{ $student->telephone1 }}" placeholder="Telefono 1">
             </td>
         </tr>
         <tr>
             <th>Telefono 2</th>
             <td>
-                <input type="text" class="form-control" id="telephone_2" name="telephone_2" value="{{ $student->telephone_2 }}" placeholder="Telefono 2">
+                <input type="text" class="form-control" id="telephone2" name="telephone2" value="{{ $student->telephone2 }}" placeholder="Telefono 2">
             </td>
         </tr>
         <tr>

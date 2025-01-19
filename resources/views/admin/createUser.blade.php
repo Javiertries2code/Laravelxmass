@@ -27,11 +27,11 @@
         </tr>
         <tr>
             <th>Telefono 1</th>
-            <td><input type="text" class="form-control" name="telephone_1" value="{{ old('telephone_1') }}"></td>
+            <td><input type="text" class="form-control" name="telephone1" value="{{ old('telephone1') }}"></td>
         </tr>
         <tr>
             <th>Telefono 2</th>
-            <td><input type="text" class="form-control" name="telephone_2" value="{{ old('telephone_2') }}"></td>
+            <td><input type="text" class="form-control" name="telephone2" value="{{ old('telephone2') }}"></td>
         </tr>
         <tr>
             <th>Rol</th>

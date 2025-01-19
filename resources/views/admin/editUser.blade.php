@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <form action="{{ route('admin.updateUser', $student->id) }}" method="POST" class="form-responsive">
+        <form action="{{ route('admin.updateUser', $user->id) }}" method="POST" class="form-responsive">
             @csrf
             @method('PUT')
             <table class="table table-responsive">
                 <tr>
                     <th>Nombre</th>
                     <td>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ $student->name }}"
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}"
                             placeholder="Nombre">
                     </td>
                 </tr>
@@ -16,28 +16,28 @@
                     <th>Apellido</th>
                     <td>
                         <input type="text" class="form-control" id="surname" name="surname"
-                            value="{{ $student->surname }}" placeholder="Apellido">
+                            value="{{ $user->surname }}" placeholder="Apellido">
                     </td>
                 </tr>
                 <tr>
                     <th>Email</th>
                     <td>
                         <input type="email" class="form-control" id="email" name="email"
-                            value="{{ $student->email }}" placeholder="Email">
+                            value="{{ $user->email }}" placeholder="Email">
                     </td>
                 </tr>
                 <tr>
                     <th>Telefono 1</th>
                     <td>
-                        <input type="text" class="form-control" id="telephone_1" name="telephone_1"
-                            value="{{ $student->telephone_1 }}" placeholder="Telefono 1">
+                        <input type="text" class="form-control" id="telephone1" name="telephone1"
+                            value="{{ $user->telephone1 }}" placeholder="Telefono 1">
                     </td>
                 </tr>
                 <tr>
                     <th>Telefono 2</th>
                     <td>
-                        <input type="text" class="form-control" id="telephone_2" name="telephone_2"
-                            value="{{ $student->telephone_2 }}" placeholder="Telefono 2">
+                        <input type="text" class="form-control" id="telephone2" name="telephone2"
+                            value="{{ $user->telephone2 }}" placeholder="Telefono 2">
                     </td>
                 </tr>
                 <tr>
@@ -48,7 +48,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="{{ $role->id }}"
                                     id="{{ $role->id }}" name="roles[]"
-                                    {{ $student->roles->contains('id', $role->id) ? 'checked' : '' }}>
+                                    {{ $user->roles->contains('id', $role->id) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="{{ $role->id }}">
                                     {{ $role->name }}
                                 </label>
@@ -61,9 +61,11 @@
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </td>
 
-                    <td colspan="2">
-                        <a href="{{ url()->previous() }}" class="btn btn-info">Volver</a>
-                    </td>
+                    @if(url()->previous() && url()->previous() != url()->current())
+                        <td colspan="2">
+                            <a href="{{ url()->previous() }}" class="btn btn-info">Volver</a>
+                        </td>
+                    @endif
 
                 </tr>
             </table>

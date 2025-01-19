@@ -14,7 +14,12 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <p>Bienvenido, {{ Auth::user()->name }}.</p>
+
+                    <p>Tipo de usuario: {{ Auth::user()->getRoleNames()->first() }}.</p>
+
+                    <p>Tus roles son: {{ implode(', ', Auth::user()->getRoleNames()->toArray()) }}.</p>
+
                 </div>
             </div>
         </div>

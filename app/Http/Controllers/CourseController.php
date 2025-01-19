@@ -13,7 +13,28 @@ class CourseController extends Controller
      */
     public function coursesList()
     {
-        return $this->redirectCourses();
+        $currentPage = request()->query('page', 1);
+        $data = Course::paginate(config('app.pagination_count'), ['*'], 'page', $currentPage);
+
+        foreach ($data as $course) {
+            $course->load('subjects');
+            $course->subjects_string = $course->subjects->pluck('code')->implode(', ');
+        }
+
+        $headers = [
+            'id' => 'id',
+            'name' => 'Nombre',
+            'subjects_string' => 'Asignaturas',
+        ];
+
+        $actions = [
+            'delete' => 'course.courseDelete',
+            'edit' => 'course.editCourse',
+            'create' => 'course.createCourse',
+        ];
+
+        $title = 'Listado de Cursos';
+        return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
 
     }
 
