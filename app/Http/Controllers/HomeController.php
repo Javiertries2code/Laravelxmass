@@ -23,6 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        if ($user && ($user->hasRole('admin') || $user->hasRole('god')) ) {
+            return redirect()->route('admin.adminhome');
+        }
+
         return view('home');
     }
 

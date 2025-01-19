@@ -13,13 +13,7 @@
     </div>
     <div class="navbar-collapse collapse d-md-block" id="menuAdmin">
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
-                    aria-current="page">
-                    Home
-                </a>
-            </li>
-
+           
             <li>
                 <a href="{{ route('admin.adminhome') }}"
                     class="nav-link {{ request()->routeIs('admin.adminhome') ? 'active' : '' }}">

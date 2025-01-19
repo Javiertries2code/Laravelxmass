@@ -20,7 +20,7 @@ class CourseController extends Controller
     public function courseDelete(Request $request)
     {
         Course::where('id', $request->id)->delete();
-        return $this->redirectCourses();
+        return redirect()->route('course.coursesList')->with('success', 'El curso ha sido eliminado correctamente.');
     }
 
     public function storeCourse(Request $request)
@@ -28,7 +28,7 @@ class CourseController extends Controller
         // Course::create(['name' => $request->name]);
 
         Course::create($request->all());
-        return $this->redirectCourses();
+        return redirect()->route('course.coursesList')->with('success', 'El curso ha sido guardado exitosamente.');
     }
     public function storeCoursewithSubject(Request $request)
     {
@@ -50,7 +50,7 @@ class CourseController extends Controller
 
         $course->subjects()->attach($subjects);
 
-        return $this->redirectCourses();
+        return redirect()->route('course.coursesList')->with('success', 'El curso ha sido guardado correctamente.');
     }
 
     public function editCourse(String $id)
@@ -64,7 +64,7 @@ class CourseController extends Controller
     {
         $course = Course::findOrFail($request->id);
         $course->update($request->all());
-        return $this->redirectCourses();
+        return redirect()->route('course.coursesList')->with('success', 'El curso ha sido guardado correctamente.');
     }
 
     public function createCourse()
@@ -76,9 +76,10 @@ class CourseController extends Controller
 
 
 
+
     private function redirectCourses()
     {
-        $headers = ['id', 'name'];
+        $headers = ['id', 'Nombre', 'Asignaturas del Curso'];
         $courses = Course::all()->load('subjects');
         return view('courses.coursesList', compact('courses', 'headers'));
     }

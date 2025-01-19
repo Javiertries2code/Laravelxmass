@@ -31,7 +31,8 @@
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Está seguro de eliminar al estudiante {{ $student->id }}?')">
-                                Eliminar
+                                <i class="bi bi-trash-fill"></i>
+
                             </button>
                         </form>
 

@@ -65,4 +65,10 @@ class StudentController extends AdminController
         $student->delete();
         return redirect()->route('listsStudents');
     }
+
+    public function studentHome()
+    {
+        $student = auth()->user();
+        return view('student.studenthome', compact('student'));
+    }
 }

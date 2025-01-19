@@ -37,15 +37,35 @@ class AdminController extends Controller
 
     public function listsStudents()
     {
-        $students = User::where('user_type', 'student')->paginate(10);
-        $headers = ['id', 'Nombre', 'Apellido', 'Email', 'Telefono 1', 'Telefono 2', 'ID de Matricula'];
-        return view('admin.listsStudents', compact('students', 'headers'));
+        $currentPage = request()->query('page', 1);
+        $data = User::where('user_type', 'student')
+            ->paginate(config('app.pagination_count'), ['*'], 'page', $currentPage);
+
+        $headers = [
+            'id' => 'id',
+            'name' => 'Nombre',
+            'surname' => 'Apellido',
+            'email' => 'Email',
+            'telephone1' => 'Telefono 1',
+            'telephone2' => 'Telefono 2',
+            'registration_id' => 'ID de Matricula',
+        ];
+
+        $actions = [
+            'delete' => 'admin.deleteStudent',
+            'edit' => 'admin.editStudent',
+        ];
+
+        $title = 'Listado de Estudiantes';
+        return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
     }
+
+
 
     public function listsUsers()
     {
         $currentPage = request()->query('page', 1);
-        $data = User::paginate(15, ['*'], 'page', $currentPage);
+        $data = User::paginate(config('app.pagination_count'), ['*'], 'page', $currentPage);
         foreach ($data as $user) {
             $roles = $user->getRoleNames()->toArray(); // [ 'god', 'teacher', 'student' ]
             $user->roles_to_str = '';
@@ -103,7 +123,14 @@ class AdminController extends Controller
     {
         $student = User::find($id);
         $student->delete();
-        return redirect()->route('admin.listsStudents');
+        return redirect()->route('admin.listsStudents')->with('success', 'El estudiante ha sido eliminado correctamente.');
+    }
+
+    public function deleteTeacher(string $id)
+    {
+        $teacher = User::find($id);
+        $teacher->delete();
+        return redirect()->route('teacher.listsTeachers')->with('success', 'El profesor ha sido eliminado correctamente.');
     }
 
     public function deleteUser(string $id)
@@ -128,13 +155,12 @@ class AdminController extends Controller
             'telephone1' => $request->telephone_1,
             'telephone2' => $request->telephone_2,
             'registration_id' => $request->registration_id,
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
         ]);
         $roles = Role::whereIn('id', $request->roles)->get();
         $newUser->syncRoles($roles);
-        return redirect()->route('admin.listsUsers');
+        return redirect()->route('admin.listsUsers')->with('success', 'El usuario ha sido creado correctamente.');
     }
-
     public function updateStudent(Request $request, string $id)
     {
         $student = User::find($id);
@@ -145,9 +171,8 @@ class AdminController extends Controller
         $student->telephone2 = $request->telephone_2;
         $student->registration_id = $request->registration_id;
         $student->save();
-        return redirect()->route('admin.listsStudents');
+        return redirect()->route('admin.listsStudents')->with('success', 'El estudiante ha sido actualizado correctamente.');
     }
-
     public function updateUser(Request $request, string $id)
     {
         $student = User::find($id);
@@ -158,21 +183,21 @@ class AdminController extends Controller
         $student->telephone2 = $request->telephone_2;
         $student->registration_id = $request->registration_id;
         if ($student->user_type == 'student' || null == $request->roles) {
-            return redirect()->route('admin.listsUsers');
+            return redirect()->route('admin.listsUsers')->with('success', 'El usuario ha sido actualizado correctamente.');
         } else {
             $roles = Role::whereIn('id', $request->roles)->get();
             $student->syncRoles($roles);
             $student->save();
-            return redirect()->route('admin.listsUsers');
+            return redirect()->route('admin.listsUsers')->with('success', 'El usuario ha sido actualizado correctamente.');
         }
     }
 
     public function adminhome()
     {
         // Le pasamos todas cards con boxes y en la vista los iteramos
-        $data = self::getCardsForDashboard();
+        $cards = self::getCardsForDashboard();
 
-        return view('admin.adminhome', compact('data'));
+        return view('admin.adminhome', compact('cards'));
 
     }
 
@@ -199,32 +224,57 @@ class AdminController extends Controller
                 'icon' => 'bi bi-book',
                 'title' => 'Cursos',
                 'text' => 'Ver cursos',
+                'count' => Course::all()->count(),
                 'route' => route('course.coursesList')
             ],
             [
                 'icon' => 'bi bi-person',
                 'title' => 'Usuarios',
                 'text' => 'Ver usuarios',
+                'count' => User::all()->count(),
                 'route' => route('admin.listsUsers')
             ],
             [
                 'icon' => 'bi bi-people',
                 'title' => 'Estudiantes',
                 'text' => 'Ver estudiantes',
+                'count' => User::where('user_type', 'student')->count(),
                 'route' => route('admin.listsStudents')
+            ],
+            [
+                'icon' => 'bi bi-people',
+                'title' => 'Profesores',
+                'text' => 'Ver profesores',
+                'count' => User::where('user_type', 'teacher')->count(),
+                'route' => route('teacher.listsTeachers')
             ],
             [
                 'icon' => 'bi bi-gear',
                 'title' => 'Roles',
                 'text' => 'Ver roles',
+                'count' => Role::all()->count(),
                 'route' => route('admin.roles')
             ],
             [
                 'icon' => 'bi bi-calendar-event',
                 'title' => 'Reuniones',
                 'text' => 'Ver reuniones',
+                'count' => \App\Models\Meeting::all()->count(),
                 'route' => route('meeting.index')
-            ]
+            ],
+            [
+                'icon' => 'bi bi-bookmark',
+                'title' => 'Asignaturas',
+                'text' => 'Ver asignaturas',
+                'count' => Subject::all()->count(),
+                'route' => route('subjects.subjectsList')
+            ],
         ];
+    }
+
+    public function deleteMeeting(string $id)
+    {
+        $meeting = Meeting::find($id);
+        return redirect()->route('meeting.index')->with('success', 'El meeting ha sido eliminado correctamente.');
     }
 }

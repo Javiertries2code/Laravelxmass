@@ -40,11 +40,16 @@
                 {{ $student->roles->first()->name ?? 'No tiene rol' }}
             </td>
         </tr>
-       
+
         <tr>
             <td colspan="2">
-                <button type="submit" class="btn btn-primary">Editar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </td>
+
+            <td colspan="2">
+                <a href="{{ url()->previous() }}" class="btn btn-info">Volver</a>
+            </td>
+
         </tr>
     </table>
 </form>

@@ -37,6 +37,8 @@ Route::delete('/admin/deleteStudent/{id}', [AdminController::class, 'deleteStude
 Route::put('/admin/updateStudent/{id}', [AdminController::class, 'updateStudent'])->name('admin.updateStudent');
 Route::get('admin/editStudent/{id}', [AdminController::class, 'editStudent'])->name('admin.editStudent');
 
+Route::delete('/admin/deleteTeacher/{id}', [AdminController::class, 'deleteTeacher'])->name('admin.deleteTeacher');
+
 
 Route::get('admin/roles', [AdminController::class, 'showRoles'])->name('admin.roles')->middleware('can:admin');;
 Route::delete('admin/roles', [AdminController::class, 'roleDelete'])->name('admin.roledestroy')->middleware('can:admin');;
@@ -63,13 +65,14 @@ Route::get('admin/editSubject/{id}', [SubjectController::class, 'editSubject'])-
 Route::get('admin/createSubject', [SubjectController::class, 'createSubject'])->name('subject.createSubject')->middleware('can:admin');
 
 
-Route::get('student/studenthome', [App\Http\Controllers\AdminController::class, 'studenthome'])->name('student.studenthome')->middleware('can:student');;
 
 
 
 
 Route::get('teacher/teacherhome', [App\Http\Controllers\AdminController::class, 'teacherhome'])->name('teacher.teacherhome')->middleware('can:teacher');;
 Route::get('admin/listsStudents', [App\Http\Controllers\AdminController::class, 'listsStudents'])->name('admin.listsStudents')->middleware('can:teacher');;
+Route::get('teacher/listsTeachers', [App\Http\Controllers\TeacherController::class, 'listsTeachers'])->name('teacher.listsTeachers')->middleware(['can:teacher,can:admin']);;
+
 
 ////anadidas mas tarde
 Route::get('students/horarios', [App\Http\Controllers\StudentScheduleController::class, 'show'])->name('students.horarios')->middleware('can:student');
@@ -86,6 +89,7 @@ Route::get('/teacher/showOne/{teacher_id}', [App\Http\Controllers\TeacherControl
 
 /// Routes mmeting
 Route::get('/meeting/newmeeting', [App\Http\Controllers\MeetingController::class, 'create'])->name('newmeeting');
+Route::delete('/admin/deleteMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'deleteMeeting'])->name('admin.deleteMeeting')->middleware(['can:admin']);;
 //Route::post('meetings.store', [App\Http\Controllers\MeetingController::class, 'store'])->name('meetings.store');
 
 Route::post('meetings.store', [App\Http\Controllers\MeetingController::class, 'store'])->name('meetings.store')->middleware(['can:student']);
@@ -95,7 +99,7 @@ Route::get('/meeting/showOne/{meeting_id}', [App\Http\Controllers\MeetingControl
 Route::get('/meeting/mymeetings', [App\Http\Controllers\MeetingController::class, 'mymeetings'])->name('meeting.mymeetings');
 
 
-Route::get('/students/studenthome', [App\Http\Controllers\AdminController::class, 'studenthome'])->name('studenthome')->middleware('can:student');
+// Route::get('/student/studenthome', [App\Http\Controllers\AdminController::class, 'studentHome'])->name('studenthome');
 
 Auth::routes();
 

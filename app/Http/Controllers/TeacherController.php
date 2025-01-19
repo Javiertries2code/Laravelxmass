@@ -55,6 +55,30 @@ class TeacherController extends Controller
     }
 
 
+    public function listsTeachers()
+    {
+        $currentPage = request()->query('page', 1);
+        $data = User::where('user_type', 'teacher')
+            ->paginate(config('app.pagination_count'), ['*'], 'page', $currentPage);
+
+        $headers = [
+            'id' => 'id',
+            'name' => 'Nombre',
+            'surname' => 'Apellido',
+            'email' => 'Email',
+            'telephone1' => 'Telefono 1',
+            'telephone2' => 'Telefono 2',
+        ];
+
+        $actions = [
+            'delete' => 'admin.deleteTeacher',
+            'edit' => 'admin.editUser',
+        ];
+
+        $title = 'Listado de Profesores';
+        return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
+    }
+
     /**
      * Display the specified resource.
      */

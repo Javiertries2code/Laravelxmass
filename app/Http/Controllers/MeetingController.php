@@ -13,12 +13,30 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        $meetings = Meeting::all();
-        $headers = ['id', 'Dia', 'Hora', 'Profesor', 'Alumno', 'Email' ];
+        $currentPage = request()->query('page', 1);
+        $data = Meeting::paginate(config('app.pagination_count'), ['*'], 'page', $currentPage);
+        foreach ($data as $meeting) {
+            $meeting->teacher_id = User::find($meeting->teacher_id)->name;
+            $meeting->student_id = User::find($meeting->student_id)->name;
+        }
+        $headers = [
+            'id' => 'id',
+            'day_week' => 'Dia',
+            'hora' => 'Hora',
+            'teacher_id' => 'Profesor',
+            'student_id' => 'Alumno',
+        ];
+        $actions = [
+            'delete' => 'admin.deleteMeeting',
+            // 'edit' => 'admin.editMeeting',
+        ];
 
-        // dd($meetings);
-        return view('meeting.allmeetings', compact('meetings','headers'));
+        $title = 'Listado de Reuniones';
+
+        return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

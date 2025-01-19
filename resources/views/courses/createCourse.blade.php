@@ -27,7 +27,10 @@
 
 
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-save-fill"></i>
+            Salvar
+        </button>
     </form>
 @endsection
 

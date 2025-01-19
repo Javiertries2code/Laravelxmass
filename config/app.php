@@ -119,6 +119,8 @@ return [
     */
 
     'pagination' => 'bootstrap-5',
+
+    'pagination_count' => env('PAGINATION_COUNT', 10),
     
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
