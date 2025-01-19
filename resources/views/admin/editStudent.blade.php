@@ -35,6 +35,10 @@
             </td>
         </tr>
         <tr>
+            <th>Tipo usuario</th>
+            <td>{{ $student->user_type }}</td>
+        </tr>
+        <tr>
             <th>Rol actual</th>
             <td>
                 {{ $student->roles->first()->name ?? 'No tiene rol' }}
@@ -43,7 +47,9 @@
 
         <tr>
             <td colspan="2">
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save-fill"></i> Guardar
+                </button>
             </td>
 
             <td colspan="2">

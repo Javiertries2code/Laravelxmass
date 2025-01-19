@@ -14,13 +14,20 @@ class Registration extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'course_id', // ala, para la asignacion masivamente de materias
+        'student_id',
+        'day'
+    ];
+
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
     }
 
     public function course(): HasOne{
-
         return $this->HasOne(Course::class);
     }
+
+
 
 }

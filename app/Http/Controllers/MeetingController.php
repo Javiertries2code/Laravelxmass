@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Meeting;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class MeetingController extends Controller
 {
@@ -54,9 +55,16 @@ class MeetingController extends Controller
      */
     public function mymeetings()
     {
-        $meetings = Meeting::where('teacher_id', auth()->user()->id)
-            ->orWhere('student_id', auth()->user()->id)
+        if (!Auth::check()) {
+            $meetings = [];
+        } else {
+
+        $userid = Auth::user()->id;
+
+        $meetings = Meeting::where('teacher_id', $userid)
+            ->orWhere('student_id', $userid)
             ->get();
+        }
         return view('meeting.mymeetings', compact('meetings'));
     }
 

@@ -35,7 +35,15 @@ class SubjectController extends Controller
     public function editSubject(String $id)
     {
         $subject = Subject::findOrFail($id);
-        return view('subjects.editSubject', compact('subject'));
+        $teachers_total = \App\Models\User::where('user_type', 'teacher')->get();
+        $teachers = [];
+        foreach ($teachers_total as $teacher) {
+            if ( $teacher->subjects()->count() < 3 ) {
+                $teachers[] = $teacher;
+            }
+        }
+
+        return view('subjects.editSubject', compact('subject', 'teachers'));
     }
 
     public function updateSubject(Request $request)
@@ -49,10 +57,12 @@ class SubjectController extends Controller
     {
 
 
+
         $headers = [
             'id' => 'id',
             'hours' => 'Horas',
             'code' => 'Codigo',
+            'teacher_name' => 'Profesor',
         ];
 
         $actions = [
@@ -63,6 +73,18 @@ class SubjectController extends Controller
 
         $currentPage = request()->query('page', 1);
         $data = Subject::paginate(config('app.pagination_count'), ['*'], 'page', $currentPage);
+
+        foreach ($data as $d) {
+
+            $d->teacher_name = '';
+            if ($d->teacher_id) {
+                $teacher = \App\Models\User::where('id', $d->teacher_id)->first();
+                if ($teacher) {
+                    $d->teacher_name = $teacher->name;
+                    $d->teacher_email = $teacher->email;
+                }
+            }
+        }
 
         $title = 'Listado de Asignaturas';
         return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));

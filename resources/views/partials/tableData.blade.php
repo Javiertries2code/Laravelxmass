@@ -47,7 +47,9 @@
     </table>
 </div>
 <div class="mt-5 d-flex justify-content-center">
-    {{ $data->links('pagination::bootstrap-5') }}
+    @if (method_exists($data, 'links'))
+        {{ $data->links('pagination::bootstrap-5') }}
+    @endif
 </div>
 
 {{-- Logica para motrar un modal de confirmacion antes de borrar --}}

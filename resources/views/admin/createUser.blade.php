@@ -23,7 +23,15 @@
         </tr>
         <tr>
             <th>Tipo usuario</th>
-            <td><input type="text" class="form-control" name="surname" value="{{ old('surname') }}"></td>
+            <td>
+                <select class="form-control" name="type">
+                    <option value="">Seleccione tipo de usuario</option>
+                    <option value="student" >Estudiante</option>
+                    <option value="teacher" >Profesor</option>
+                    <option value="admin" >Administrador</option>
+                    <option value="god" >God</option>
+                </select>
+            </td>
         </tr>
         <tr>
             <th>Telefono 1</th>

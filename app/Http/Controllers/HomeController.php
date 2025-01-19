@@ -25,17 +25,22 @@ class HomeController extends Controller
     {
         $user = \Illuminate\Support\Facades\Auth::user();
 
-        if ($user && ($user->hasRole('admin') || $user->hasRole('god')) ) {
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        if ($user && $user->user_type === 'admin' || $user->user_type === 'god') {
             return redirect()->route('admin.adminhome');
         }
 
-        if ($user && $user->hasRole('teacher')) {
+        if ($user && $user->user_type === 'teacher') {
             return redirect()->route('teacher.index');
         }
 
-        if ($user && $user->hasRole('student')) {
+        if ($user && $user->user_type === 'student') {
             return redirect()->route('student.index');
         }
+
 
         return view('home');
     }

@@ -101,6 +101,11 @@ Route::get('/meeting/mymeetings', [App\Http\Controllers\MeetingController::class
 
 Route::get('/student/studenthome', [App\Http\Controllers\AdminController::class, 'studentHome'])->name('studenthome');
 
-Auth::routes();
-
+Route::get('/admin/registrationNew', [App\Http\Controllers\AdminController::class, 'registrationNew'])->name('admin.registrationNew')->middleware(['can:admin']);;
+Route::get('/admin/registrationList', [App\Http\Controllers\AdminController::class, 'registrationList'])->name('admin.registrationList')->middleware('can:admin');;
+Route::post('/admin/registrationStore', [App\Http\Controllers\AdminController::class, 'registrationStore'])->name('admin.registrationStore')->middleware('can:admin');
+Route::post('/admin/registrationUpdate', [App\Http\Controllers\AdminController::class, 'registrationUpdate'])->name('admin.registrationUpdate')->middleware('can:admin');
+Route::get('/admin/registrationList/{student_id}', [App\Http\Controllers\AdminController::class, 'registrationListByStudent'])->name('student.registrationListByStudent')->middleware(['can:student', 'can:teacher', 'can:admin']);;
+Route::get('/admin/registrationEdit/{id}', [App\Http\Controllers\AdminController::class, 'registrationEdit'])->name('admin.registrationEdit')->middleware(['can:admin']);;
+Route::delete('/admin/registrationDelete/{id}', [App\Http\Controllers\AdminController::class, 'registrationDelete'])->name('admin.registrationDelete')->middleware(['can:admin']);;
 Auth::routes();

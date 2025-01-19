@@ -87,6 +87,7 @@ class AdminController extends Controller
         $actions = [
             'delete' => 'admin.deleteUser',
             'edit' => 'admin.editUser',
+            'create' => 'admin.createUser',
         ];
 
         $title = 'Listado de Usuarios';
@@ -199,19 +200,22 @@ class AdminController extends Controller
         $cards = self::getCardsForDashboard();
 
         return view('admin.adminhome', compact('cards'));
-
     }
 
     public function studenthome()
     {
         $user = auth()->user();
-        $courses_ids = Registration::where('student_id', $user->id)->get()->pluck('course_id');
+        if (!$user) {
+            return redirect()->route('home');
+        }
+        $matriculaciones = Registration::where('student_id', $user->id)->get();
+        foreach ($matriculaciones as $registration) {
+            $course = Course::find($registration->course_id);
+            $registration->course_name_str = $course ? $course->name : 'Curso no encontrado';
+        }
 
-        $courses = []; //Course::all()->where('id', $courses_ids[0])->load('subjects');
 
-
-
-        return view('student.studenthome', compact('user', 'courses'));
+        return view('student.studenthome', compact('user', 'matriculaciones',));
     }
 
     public function teacherhome()
@@ -219,7 +223,8 @@ class AdminController extends Controller
         return view('teacher.teacherhome');
     }
 
-    public static function getCardsForDashboard() {
+    public static function getCardsForDashboard()
+    {
         return [
             [
                 'icon' => 'bi bi-book',
@@ -231,6 +236,7 @@ class AdminController extends Controller
             [
                 'icon' => 'bi bi-person',
                 'title' => 'Usuarios',
+                'active' => request()->routeIs('admin.editUser', 'admin.listsUsers'),
                 'text' => 'Ver usuarios',
                 'count' => User::all()->count(),
                 'route' => route('admin.listsUsers')
@@ -238,6 +244,7 @@ class AdminController extends Controller
             [
                 'icon' => 'bi bi-people',
                 'title' => 'Estudiantes',
+                'active' => request()->routeIs('admin.editStudent', 'admin.listsStudents'),
                 'text' => 'Ver estudiantes',
                 'count' => User::where('user_type', 'student')->count(),
                 'route' => route('admin.listsStudents')
@@ -245,6 +252,7 @@ class AdminController extends Controller
             [
                 'icon' => 'bi bi-people',
                 'title' => 'Profesores',
+                'active' => request()->routeIs('admin.editTeacher', 'admin.listsTeachers'),
                 'text' => 'Ver profesores',
                 'count' => User::where('user_type', 'teacher')->count(),
                 'route' => route('teacher.listsTeachers')
@@ -259,6 +267,7 @@ class AdminController extends Controller
             [
                 'icon' => 'bi bi-calendar-event',
                 'title' => 'Reuniones',
+                'active' => str_contains(request()->route()->uri(), 'meeting'),
                 'text' => 'Ver reuniones',
                 'count' => \App\Models\Meeting::all()->count(),
                 'route' => route('meeting.index')
@@ -270,6 +279,14 @@ class AdminController extends Controller
                 'count' => Subject::all()->count(),
                 'route' => route('subjects.subjectsList')
             ],
+            [
+                'icon' => 'bi bi-clipboard-data',
+                'title' => 'Matriculaciones',
+                'active' => str_contains(request()->route()->uri(), 'registration'),
+                'text' => 'Ver matriculaciones',
+                'count' => Registration::all()->count(),
+                'route' => route('admin.registrationList')
+            ],
         ];
     }
 
@@ -277,5 +294,164 @@ class AdminController extends Controller
     {
         $meeting = Meeting::find($id);
         return redirect()->route('meeting.index')->with('success', 'El meeting ha sido eliminado correctamente.');
+    }
+
+    public function registrationList()
+    {
+        $currentPage = request()->query('page', 1);
+        $data = \App\Models\Registration::paginate(config('app.pagination_count'), ['*'], 'page', $currentPage);
+
+        foreach ($data as $registration) {
+            $registration->student_name = '<a href="'
+                . route('student.registrationListByStudent', $registration->student_id) . '"> '
+                . User::find($registration->student_id)->name
+                . '</a>';
+            $registration->course_name = Course::find($registration->course_id)->name;
+            $registration->day_readable_by_human = date('l, j F Y', strtotime($registration->day));
+        }
+        $headers = [
+            'id' => 'ID',
+            'student_name' => 'Estudiante',
+            'course_name' => 'Curso',
+            'day_readable_by_human' => 'Fecha de inicio',
+        ];
+        $actions = [
+            'create' => 'admin.registrationNew', // Adjust route names as needed
+            'edit' => 'admin.registrationEdit',
+            'delete' => 'admin.registrationDelete'
+        ];
+        $title = 'Listado de Matriculaciones';
+        return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
+    }
+
+
+    public function registrationNew()
+    {
+        $courses = Course::all();
+        $students = User::where('user_type', '=', 'student')->get();
+        return view('admin.registrationNew', compact('courses', 'students'));
+    }
+
+
+    // crear nuevo Logica:
+    public function registrationStore(Request $request)
+    {
+        // Aqui  verificar que otro registro con el mismo student_id
+        // y el mismo course_id no exsta ya, pero sin contar el que es pasado en request
+        // porque es el que estamos editando ahora
+        $existingRegistration = Registration::where('student_id', '=', $request->student_id)
+            ->where('course_id', '=', $request->course_id)
+            ->where('id', '!=', $request->id)
+            ->first();
+
+        if ($existingRegistration) {
+            return redirect()->route('admin.registrationList')->with('error', 'Ya existe una matriculación para este estudiante en este curso.');
+        }
+
+        try {
+            $registration = new Registration();
+            $registration->student_id = (int) $request->student_id;
+            $registration->course_id = (int) $request->course_id;
+            $registration->day = $request->day;
+            $registration->save();
+        } catch (ValidationException $e) {
+
+            return redirect()->route('admin.registrationList')->withErrors($e->validator);
+        }
+
+        if ($registration && $request->student_id && $request->course_id) {
+            return redirect()->route('admin.registrationList')->with('success', 'La matricula con ID ' . $registration->id . ' ha sido creada correctamente.');
+        } else {
+            return redirect()->route('admin.registrationList')->with('error', 'Hubo un error al crear la matricula. Intente de nuevo.');
+        }
+    }
+
+
+    public function registrationUpdate(Request $request)
+    {
+
+
+        // Aqui  verificar que otro registro con el mismo student_id
+        // y el mismo course_id no exsta ya, pero sin contar el que es pasado en request
+        // porque es el que estamos editando ahora
+        $existingRegistration = Registration::where('student_id', '=', $request->student_id)
+            ->where('course_id', '=', $request->course_id)
+            ->where('id', '!=', $request->id)
+            ->first();
+
+        if ($existingRegistration) {
+            return redirect()->route('admin.registrationList')->with('error', 'Ya existe una matriculación para este estudiante en este curso.');
+        }
+
+        try {
+            $registration = Registration::findOrFail($request->id);
+            $registration->update([
+                'student_id' => (int) $request->student_id,
+                'course_id' => (int) $request->course_id,
+                'day' => $request->day,
+            ]);
+        } catch (ValidationException $e) {
+
+            return redirect()->route('admin.registrationList')->withErrors($e->validator);
+        }
+
+        if ($registration && $request->student_id && $request->course_id) {
+            return redirect()->route('admin.registrationList')->with('success', 'La matricula con ID ' . $registration->id . ' ha sido actualizada correctamente.');
+        } else {
+            return redirect()->route('admin.registrationList')->with('error', 'Hubo un error al actualizar la matricula. Intente de nuevo.');
+        }
+    }
+
+
+
+
+    public function registrationEdit($id)
+    {
+        $registration = Registration::findOrFail($id);
+        $courses = Course::all();
+        $students = User::where('user_type', '=', 'student')->get();
+        $stundent_assigned = User::where('id', '=', $registration->student_id)->first();
+        return view('admin.registrationEdit', compact('registration', 'courses', 'students', 'stundent_assigned'));
+    }
+
+
+    public function registrationListByStudent($student_id)
+    {
+        $student = User::findOrFail($student_id);
+        $title = 'Listado de Matriculaciones de ' . $student->name;
+        $currentPage = request()->query('page', 1);
+
+        $data = Registration::where('student_id', $student_id)->paginate(config('app.pagination_count'), ['*'], 'page', $currentPage);
+
+        foreach ($data as $registration) {
+            $registration->student_name = '<a href="'
+                . route('student.registrationListByStudent', $registration->student_id) . '"> '
+                . User::find($registration->student_id)->name
+                . '</a>';
+            $registration->course_name = Course::find($registration->course_id)->name;
+            $registration->day_readable_by_human = date('l, j F Y', strtotime($registration->day));
+        }
+        $headers = [
+            'id' => 'ID',
+            'student_name' => 'Estudiante',
+            'course_name' => 'Curso',
+            'day_readable_by_human' => 'Fecha de inicio',
+        ];
+        $actions = [
+            'create' => 'admin.registrationNew', // Adjust route names as needed
+            'edit' => 'admin.registrationEdit',
+            'delete' => 'admin.registrationDelete'
+        ];
+
+        return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
+    }
+
+
+    public function registrationDelete(Request $request)
+    {
+        $id = $request->id;
+        $registration = Registration::findOrFail($id);
+        $registration->delete();
+        return redirect()->route('admin.registrationList')->with('success', 'La matricula con ID ' . $id . ' ha sido eliminada correctamente.');
     }
 }

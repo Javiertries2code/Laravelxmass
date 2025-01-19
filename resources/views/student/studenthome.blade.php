@@ -1,33 +1,11 @@
-
 @extends('layouts.app')
 @section('content')
-<h1>student</h1>
+<div class="container">
 
+    <h1>Cursos de <b>{{ $user->name }}</b> ({{ $user->id}}, {{ $user->email }})</h1>    {{-- @include('partials.tableData', ['data' => $matriculaciones, 'headers' => [ 'id' => 'id'] ]) --}}
+    @include('partials.tableData', ['data' => $matriculaciones,
+        'headers' => [ 'id' => 'id de la matricula', 'day' => 'Fecha de inicio', 'course_name_str' => 'Curso' ] ])
 
-
-<h1>Cursos de {{ $user->name }}</h1>
-
-<table >
-    <thead>
-        <tr>
-            <th>Course</th>
-            <th>Subjects</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($courses as $course)
-            <tr>
-                <td>{{ $course->name }}</td>
-                <td>
-                    <ul>
-                        @foreach ($course->subjects as $subject)
-                            <li>{{ $subject->code }}</li>
-                        @endforeach
-                    </ul>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
-
+</div>
 @endsection
+

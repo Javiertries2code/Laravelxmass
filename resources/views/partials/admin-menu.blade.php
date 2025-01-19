@@ -13,7 +13,7 @@
     </div>
     <div class="navbar-collapse collapse d-md-block" id="menuAdmin">
         <ul class="nav nav-pills flex-column mb-auto">
-           
+
             <li>
                 <a href="{{ route('admin.adminhome') }}"
                     class="nav-link {{ request()->routeIs('admin.adminhome') ? 'active' : '' }}">
@@ -23,7 +23,10 @@
 
             @foreach(App\Http\Controllers\AdminController::getCardsForDashboard() as $card)
                 <li>
-                    <a href="{{ $card['route'] }}" class="nav-link {{ request()->url() === $card['route'] ? 'active' : '' }}">
+                    <a href="{{ $card['route'] }}" class="nav-link {{ request()->url() === $card['route'] || ($card['active'] ?? false) ? 'active' : '' }}">
+                        @if (isset($card['icon']))
+                            <i class="bi {{ $card['icon'] }} me-2"></i>
+                        @endif
                         {{ $card['title'] }}
 
                     </a>

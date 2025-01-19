@@ -4,3 +4,9 @@
 @tailwind components;
 @tailwind utilities; */
 
+
+.btn.btn-secondary {
+    color: white;
+}
+
+

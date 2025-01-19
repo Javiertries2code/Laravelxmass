@@ -41,6 +41,10 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Tipo usuario</th>
+                    <td>{{ $user->user_type }}</td>
+                </tr>
+                <tr>
                     <th>Rol</th>
                     <td>
                         @foreach ($roles as $role)
@@ -58,12 +62,21 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-save-fill"></i> Guardar
+                        </button>
                     </td>
+
+                    <td colspan="2">
+                        <a href="{{ route('admin.registrationNew') }}?user_id={{ $user->id }}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Crear Matriculacion
+                        </a>
+                    </td>
+
 
                     @if(url()->previous() && url()->previous() != url()->current())
                         <td colspan="2">
-                            <a href="{{ url()->previous() }}" class="btn btn-info">Volver</a>
+                            <a href="{{ url()->previous() }}" class="btn btn-info"><i class="bi bi-arrow-left-circle"></i> Volver</a>
                         </td>
                     @endif
 
