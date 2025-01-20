@@ -10,7 +10,7 @@
 
 <div class="form-group mb-3">
     <label for="alumno_email" class="form-label">Email Alumno</label>
-    <input type="email" class="form-control" id="alumno_email" name="alumno_email" value="{{ auth()->user()->email }}" placeholder="{{ auth()->user()->email }}" required />
+    <input type="email" readonly class="form-control" id="alumno_email" name="alumno_email" value="{{ auth()->user()->email }}" placeholder="{{ auth()->user()->email }}" required />
 </div>
             <div class="form-group mb-3">
                 <label for="teacher_email" class="form-label">Profesor</label>
@@ -33,8 +33,8 @@
                 </select>
             </div>
             <div class="form-group mb-3">
-                <label for="hora" class="form-label">Hora</label>
-                <select class="form-control" id="hora" name="hora" required>
+                <label for="hour" class="form-label">Hora</label>
+                <select class="form-control" id="hour" name="hour" required>
                     <option value="">Seleccione una hora</option>
                     <option value="1">Hora 1</option>
                     <option value="2">Hora 2</option>

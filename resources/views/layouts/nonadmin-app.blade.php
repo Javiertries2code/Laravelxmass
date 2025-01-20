@@ -27,9 +27,40 @@
 
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                    <!-- centro Side Of Navbar -->
+                    <ul class="navbar-nav me-auto ms-auto d-none d-md-flex">
 
+                        @if (Auth::user()->getRoleNames()->first() == 'student')
+                            <li class="nav-item">
+                                <a class="nav-link  {{ request()->routeIs('studentHome') ? 'active' : '' }}" href="{{ route('studentHome') }}">
+                                    {{ __('Home') }}
+                                </a>
+                            </li>
+                        @endif
+
+                        @if (Auth::user()->getRoleNames()->first() == 'student')
+                            <li class="nav-item">
+                                <a class="nav-link  {{ request()->routeIs('meeting.mymeetings') ? 'active' : '' }}" href="{{ route('meeting.mymeetings') }}">
+                                    {{ __('Mis reuniones') }}
+                                </a>
+                            </li>
+                        @endif
+
+                        @if (Auth::user()->can('student'))
+                            <li class="nav-item">
+                                <a class="nav-link  {{ request()->routeIs('teacher.listsTeachers') ? 'active' : '' }}" href="{{ route('teacher.listsTeachers') }}">
+                                    {{ __('Mis profesores') }}
+                                </a>
+                            </li>
+                        @endif
+
+                        @if (Auth::user()->can('teacher'))
+                            <li class="nav-item">
+                                <a class="nav-link  {{ request()->routeIs('student.studentslist') ? 'active' : '' }}" href="{{ route('student.studentslist') }}">
+                                    {{ __('Mis Alumnos') }}
+                                </a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -55,6 +86,27 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+
+                                    @if (Auth::user()->getRoleNames()->first() == 'student')
+                                        <a class="dropdown-item" href="{{ route('meeting.mymeetings') }}">
+                                            {{ __('Mis reuniones') }}
+                                        </a>
+                                    @endif
+
+                                    @if (Auth::user()->can('student'))
+                                        <a class="dropdown-item" href="{{ route('teacher.listsTeachers') }}">
+                                            {{ __('Mis profesores') }}
+                                        </a>
+                                    @endif
+
+                                    @if (Auth::user()->can('teacher'))
+                                        <a class="dropdown-item" href="{{ route('student.studentslist') }}">
+                                            {{ __('Mis Alumnos') }}
+                                        </a>
+                                    @endif
+
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

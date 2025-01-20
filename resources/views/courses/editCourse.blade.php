@@ -22,11 +22,25 @@
                         <td>
                             <input type="text" class="form-control" name="name" value="{{ $course->name }}" placeholder="{{ $course->name }}">
                         </td>
-                       
+
+                    </tr>
+
+                    <tr>
+                        <td>Asignaturas</td>
+                        <td>
+                            @foreach($subjects as $subject)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="subjects[]" value="{{ $subject->id }}" id="subject{{ $subject->id }}" {{ $course->subjects->contains($subject) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="subject{{ $subject->id }}">
+                                        {{ $subject->code }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" class="btn btn-success bt5"><i class="bi bi-save-fill"></i> Salvar</button>
         </form>
     </div>
 @endif

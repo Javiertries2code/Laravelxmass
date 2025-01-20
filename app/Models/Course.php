@@ -20,10 +20,8 @@ class Course extends Model
         return $this->BelongsToMany(Subject::class);
     }
 
-
-
     public function registrations(): HasMany {
-        return $this->hasMany(Registration::class);
+        return $this->hasMany(Registration::class, 'course_id');
     }
 
 }

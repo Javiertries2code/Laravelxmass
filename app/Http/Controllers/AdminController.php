@@ -202,21 +202,6 @@ class AdminController extends Controller
         return view('admin.adminhome', compact('cards'));
     }
 
-    public function studenthome()
-    {
-        $user = auth()->user();
-        if (!$user) {
-            return redirect()->route('home');
-        }
-        $matriculaciones = Registration::where('student_id', $user->id)->get();
-        foreach ($matriculaciones as $registration) {
-            $course = Course::find($registration->course_id);
-            $registration->course_name_str = $course ? $course->name : 'Curso no encontrado';
-        }
-
-
-        return view('student.studenthome', compact('user', 'matriculaciones',));
-    }
 
     public function teacherhome()
     {
@@ -232,6 +217,13 @@ class AdminController extends Controller
                 'text' => 'Ver cursos',
                 'count' => Course::all()->count(),
                 'route' => route('course.coursesList')
+            ],
+            [
+                'icon' => 'bi bi-bookmark',
+                'title' => 'Asignaturas',
+                'text' => 'Ver asignaturas',
+                'count' => Subject::all()->count(),
+                'route' => route('subjects.subjectsList')
             ],
             [
                 'icon' => 'bi bi-person',
@@ -273,13 +265,6 @@ class AdminController extends Controller
                 'route' => route('meeting.index')
             ],
             [
-                'icon' => 'bi bi-bookmark',
-                'title' => 'Asignaturas',
-                'text' => 'Ver asignaturas',
-                'count' => Subject::all()->count(),
-                'route' => route('subjects.subjectsList')
-            ],
-            [
                 'icon' => 'bi bi-clipboard-data',
                 'title' => 'Matriculaciones',
                 'active' => str_contains(request()->route()->uri(), 'registration'),
@@ -295,6 +280,8 @@ class AdminController extends Controller
         $meeting = Meeting::find($id);
         return redirect()->route('meeting.index')->with('success', 'El meeting ha sido eliminado correctamente.');
     }
+
+
 
     public function registrationList()
     {

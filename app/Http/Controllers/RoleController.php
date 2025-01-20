@@ -69,7 +69,7 @@ class RoleController extends Controller
             return redirect()->back()->with('error', 'No se puede eliminar el rol ' . $name);
         }
 
-            $role->delete();
-            return redirect()->back()->with('success', 'Rol eliminado');
-
+        $role->delete();
+        return redirect()->back()->with('success', 'Rol eliminado');
+    }
 }

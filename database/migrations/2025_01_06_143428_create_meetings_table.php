@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('users')->cascadeOnDelete(); //this two will be needed anyways, as to know who with is the meeting
             $table->date('date');
             $table->string('day_week');//as ain sure if i gotta set the meeting based on calendar or day of the week
-            $table->time('hour');
+            $table->string('hour');
             $table->timestamps();
             $table->softDeletes();
         });

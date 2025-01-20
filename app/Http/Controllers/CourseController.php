@@ -78,13 +78,17 @@ class CourseController extends Controller
     {
 
         $course = Course::findOrFail($id);
-        return view('courses.editCourse', compact('course'));
+        $subjects = Subject::all();
+
+        return view('courses.editCourse', compact('course','subjects'));
 
     }
     public function updateCourse(Request $request)
     {
         $course = Course::findOrFail($request->id);
-        $course->update($request->all());
+        $course->subjects()->sync($request->subjects);
+
+        $course->update(['name' => $request->name]);
         return redirect()->route('course.coursesList')->with('success', 'El curso ha sido guardado correctamente.');
     }
 

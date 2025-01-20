@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+
     /**
      * Create a new controller instance.
      *
@@ -38,12 +40,33 @@ class HomeController extends Controller
         }
 
         if ($user && $user->user_type === 'student') {
-            return redirect()->route('student.index');
+            return redirect()->route('roothome');
         }
 
 
         return view('home');
     }
 
+    public function goHome()
+    {
 
+        if (auth()->check()) {
+            if (auth()->user()->user_type == 'admin' ) {
+                return redirect()->route('admin.adminhome');
+            }
+            if (auth()->user()->user_type == 'teacher') {
+                return redirect()->route('teacher.teacherhome');
+            }
+            if (auth()->user()->user_type == 'student' ) {
+                return redirect()->route('studentHome');
+            }
+        }
+        else
+        {
+           echo "else";
+        }
+
+        return redirect()->route('login');
+    }
 }
+

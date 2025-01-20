@@ -21,7 +21,9 @@
                 <select class="form-control" id="student_id" name="student_id" required>
                     <option value="">Seleccione un estudiante</option>
                     @foreach($students as $student)
-                        <option value="{{ $student->id }}">{{ $student->name }} {{ $student->surname }}</option>
+                        <option value="{{ $student->id }}" {{ (request()->query('user_id') == $student->id) ? 'selected' : '' }}>
+                            {{ $student->name }} {{ $student->surname }}
+                        </option>
                     @endforeach
                 </select>
             </div>

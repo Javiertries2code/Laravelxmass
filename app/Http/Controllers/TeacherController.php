@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 
 
@@ -38,7 +39,7 @@ class TeacherController extends Controller
         $students = User::where('user_type', 'teacher')->get();
         $headers = ['id', 'Nombre', 'Apellido', 'Email', 'tipo de usuario', 'Telefono 1'];
 
-       return view('teacher.teachersList', compact('students', 'headers'));
+        return view('teacher.teachersList', compact('students', 'headers'));
     }
 
 
@@ -50,8 +51,8 @@ class TeacherController extends Controller
         $teacher = $teacherlist[0];
 
         echo $teacher->name . "<br>";
-            echo $teacher->surname . "<br>";
-            echo $teacher->email . "<br><br>";
+        echo $teacher->surname . "<br>";
+        echo $teacher->email . "<br><br>";
     }
 
 
@@ -70,11 +71,16 @@ class TeacherController extends Controller
             'telephone2' => 'Telefono 2',
         ];
 
-        $actions = [
-            'delete' => 'admin.deleteTeacher',
-            'edit' => 'admin.editUser',
-        ];
 
+        if (auth()->user()->can('admin')) {
+            $actions = [
+                'delete' => 'admin.deleteTeacher',
+                'edit' => 'admin.editUser',
+            ];
+        } else {
+            $actions = [
+            ];
+        }
         $title = 'Listado de Profesores';
         return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
     }
