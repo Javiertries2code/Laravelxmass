@@ -52,6 +52,12 @@
                                     {{ __('Profesores') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+
+                                <a class="nav-link  {{ request()->routeIs('students.horarios') ? 'active' : '' }}" href="{{ route('students.horarios') }}">
+                                    {{ __('Horarios') }}
+                                </a>
+                            </li>
                         @endif
 
                         @if (Auth::user()->can('teacher'))

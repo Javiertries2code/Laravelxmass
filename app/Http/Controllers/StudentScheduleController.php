@@ -46,31 +46,19 @@ class StudentScheduleController extends Controller
      */
     public function show()
     {
-        $schedules =  StudentSchedule::all()->groupBy('course_id');
+        $student_course = \App\Models\Registration::where('student_id', auth()->user()->id)->pluck('course_id')->toArray();
+        $schedules =  StudentSchedule::whereIn('course_id', $student_course)->get()->groupBy('course_id');
+
+    //    // dd($student_course);
+    //    foreach($schedules as $course)
+    //         echo $course; //esto ya es el id de course
         $subjects = \App\Models\Subject::all();
         $subject2 = \App\Models\Subject::find(2);
         $subject6 = \App\Models\Subject::find(6);
 
-        // {
-        //    foreach(  $schs as $sch)
-        //    {
-
-        //    echo "HORARIO--<br><br>";
-        //    echo "curso--";
-        //    echo $sch->course_id; echo "<br><br>";
-        //    echo $sch->day_week; echo "<br><brhour subject>--\r\n";
-        //    echo $sch->hour_1; echo "<br><brhour subject>--\r\n";
-        //    echo $sch->hour_2;echo "<br><br>hour subject--\r\n";
-        //    echo $sch->hour_3;echo "<br><br>hour subject--\r\n";
-        //    echo $sch->hour_4;echo "<br><br>hour subject--";
-        //    echo $sch->hour_5;echo "<br><br>hour subject--";
-        //    echo $sch->hour_6 ;echo "<br><br>";
-        // }
-       //}
        return view('student.horarios', ['schedules' => $schedules, 'subjects' => $subjects, 'subject2' => $subject2, 'subject6' => $subject6 ]);
 
-        // Aquí podrías obtener datos si fuera necesario
-        //return view('student.horarios', ['schedules' => $schedules ]);
+
     }
 
     /**
