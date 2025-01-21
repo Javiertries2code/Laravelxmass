@@ -162,13 +162,16 @@ class MeetingController extends Controller
      */
     public function update(Request $request, Meeting $meeting)
     {
+
+       // dd($request);
         $meeting = Meeting::find($request->id);
-        $meeting->day_week = $request->input('dia');
-        $meeting->hora = $request->input('hora');
+        $meeting->day_week = $request->input('day_week');
+        $meeting->hour = $request->input('hour');
         $meeting->teacher_id = $request->input('teacher_id');
         $meeting->student_id = $request->input('student_id');
+        $meeting->accepted = 0;
         $meeting->save();
-        return redirect()->route('admin.meetings.index');
+        return redirect()->route('meeting.mymeetings');
     }
 
 

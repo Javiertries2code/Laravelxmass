@@ -62,9 +62,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                    </td>
+                    @if(auth()->user()->user_type === 'student')
+                        <td colspan="2">
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </td>
+                    @endif
 
                 </tr>
 

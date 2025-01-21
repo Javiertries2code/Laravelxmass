@@ -93,7 +93,7 @@ Route::get('/meeting/newmeeting', [App\Http\Controllers\MeetingController::class
 // esto aun no funcion, el middleware no deja borrar con 403. El middleware no parece funcionar bien
 Route::delete('/meeting/deleteMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'destroy'])->name('meeting.delete')->middleware(['can:teacher_student']);
 Route::get('/meeting/editMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'editMeeting'])->name('editMeeting')->middleware(['can:teacher_student']);
-Route::post('/meeting/updateMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'update'])->name('meeting.update')->middleware(['can:teacher']);
+Route::put('/meeting/updateMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'update'])->name('meeting.update')->middleware(['can:teacher_student']);
 Route::post('/meeting/approveMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'approveMeeting'])->name('meeting.approveMeeting')->middleware(['can:teacher']);
 
 
