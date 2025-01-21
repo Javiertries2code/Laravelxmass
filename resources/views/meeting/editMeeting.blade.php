@@ -71,26 +71,28 @@
             </table>
         </form>
 
-        <form action="{{ route('meeting.approveMeeting', $meeting->id) }}" method="POST">
-            @csrf
-            @method('POST')
-            <table class="table">
-                <tr>
-                    <td colspan="2">
-                        @if ($meeting->accepted)
-                            <p class="text-success"> Este meeting esta aprobado</p>
+        @can('teacher')
+            <form action="{{ route('meeting.approveMeeting', $meeting->id) }}" method="POST">
+                @csrf
+                @method('POST')
+                <table class="table">
+                    <tr>
+                        <td colspan="2">
+                            @if ($meeting->accepted)
+                                <p class="text-success"> Este meeting esta aprobado</p>
 
-                            <button type="submit" class="btn btn-danger" name="accepted" value="0">Desaprobar este
-                                meeting</button>
-                        @else
-                            <p class="text-danger"> Este meeting esta pendiente de aprobacion</p>
+                                <button type="submit" class="btn btn-danger" name="accepted" value="0">Desaprobar este
+                                    meeting</button>
+                            @else
+                                <p class="text-danger"> Este meeting esta pendiente de aprobacion</p>
 
-                            <button type="submit" class="btn btn-success" name="accepted" value="1">Aprobar este
-                                meeting</button>
-                        @endif
-                    </td>
-                </tr>
-            </table>
-        </form>
+                                <button type="submit" class="btn btn-success" name="accepted" value="1">Aprobar este
+                                    meeting</button>
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        @endcan
     </div>
 @endsection

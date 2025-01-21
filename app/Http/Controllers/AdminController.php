@@ -48,7 +48,7 @@ class AdminController extends Controller
             'email' => 'Email',
             'telephone1' => 'Telefono 1',
             'telephone2' => 'Telefono 2',
-            'registration_id' => 'ID de Matricula',
+          //  'registration_id' => 'ID de Matricula',
         ];
 
         $actions = [

@@ -16,7 +16,8 @@ class SubjectController extends Controller
     public function subjectDelete(Request $request)
     {
         Subject::where('id', $request->id)->delete();
-        return redirect()->route('subjects.subjectsList')->with('success', 'La asignatura ha sido eliminada exitosamente.');    }
+        return redirect()->route('subjects.subjectsList')->with('success', 'La asignatura ha sido eliminada exitosamente.');
+    }
 
     public function createSubject()
     {
@@ -30,7 +31,6 @@ class SubjectController extends Controller
     {
         Subject::create($request->all());
         return redirect()->route('subjects.subjectsList')->with('success', 'La asignatura ha sido guardada exitosamente.');
-
     }
     public function editSubject(String $id)
     {
@@ -38,7 +38,7 @@ class SubjectController extends Controller
         $teachers_total = \App\Models\User::where('user_type', 'teacher')->get();
         $teachers = [];
         foreach ($teachers_total as $teacher) {
-            if ( $teacher->subjects()->count() < 3 ) {
+            if ($teacher->subjects()->count() < 3) {
                 $teachers[] = $teacher;
             }
         }
@@ -49,8 +49,14 @@ class SubjectController extends Controller
     public function updateSubject(Request $request)
     {
         $subject = Subject::findOrFail($request->id);
+
+        $codeAlreadyExists = Subject::where('code', $request->code)->where('id', '!=', $request->id)->first();
+        if ($codeAlreadyExists) {
+            return back()->with('error', 'El codigo de la asignatura ya existe.');
+        }
         $subject->update($request->all());
-        return redirect()->route('subjects.subjectsList')->with('success', 'La asignatura ha sido guardada exitosamente.');    }
+        return redirect()->route('subjects.subjectsList')->with('success', 'La asignatura ha sido guardada exitosamente.');
+    }
 
 
     private function redirectSubjects()
@@ -88,6 +94,5 @@ class SubjectController extends Controller
 
         $title = 'Listado de Asignaturas';
         return view('admin.listTableData', compact('title', 'data', 'headers', 'actions'));
-
     }
 }

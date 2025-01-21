@@ -1,9 +1,19 @@
 {{-- Existe una plantilla general para los usuarios "normales" --}}
 {{-- 1: admins --}}
+
+
 @if (Auth::check() &&
-        (Auth::user()->getRoleNames()->first() == 'god' || Auth::user()->getRoleNames()->first() == 'admin'))
+        (Auth::user()->user_type== 'God' || Auth::user()->user_type == 'admin'))
+
     @include('layouts.admin-app')
-@else
-{{-- 2: usuarios normales --}}
+
+@elseif (Auth::check() )
+
+    {{-- 2: usuarios normales --}}
     @include('layouts.nonadmin-app')
+
+@else
+
+    @include('layouts.guest-app')
+
 @endif

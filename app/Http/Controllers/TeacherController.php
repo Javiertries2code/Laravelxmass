@@ -43,6 +43,15 @@ class TeacherController extends Controller
     }
 
 
+    public function teachersSchedule()
+    {
+        // $subjects = Subject::where('teacher_id', auth()->user()->id)->get();
+        // $schedules = StudentSchedule::all();
+
+
+        // return view('teacher.teachersSchedule');
+    }
+
 
     public function showOne(string $teacher_id)
     {

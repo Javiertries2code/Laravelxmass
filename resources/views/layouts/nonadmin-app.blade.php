@@ -30,7 +30,7 @@
                     <!-- centro Side Of Navbar -->
                     <ul class="navbar-nav me-auto ms-auto d-none d-md-flex">
 
-                        @if (Auth::user()->getRoleNames()->first() == 'student')
+                        @if (Auth::user()->user_type == 'student')
                             <li class="nav-item">
                                 <a class="nav-link  {{ request()->routeIs('studentHome') ? 'active' : '' }}" href="{{ route('studentHome') }}">
                                     {{ __('Home') }}
@@ -38,10 +38,10 @@
                             </li>
                         @endif
 
-                        @if (Auth::user()->getRoleNames()->first() == 'student')
+                        @if (Auth::user()->user_type == 'student' || Auth::user()->user_type == 'teacher')
                             <li class="nav-item">
                                 <a class="nav-link  {{ request()->routeIs('meeting.mymeetings') ? 'active' : '' }}" href="{{ route('meeting.mymeetings') }}">
-                                    {{ __('Mis reuniones') }}
+                                    {{ __('Reuniones') }}
                                 </a>
                             </li>
                         @endif
@@ -49,7 +49,7 @@
                         @if (Auth::user()->can('student'))
                             <li class="nav-item">
                                 <a class="nav-link  {{ request()->routeIs('teacher.listsTeachers') ? 'active' : '' }}" href="{{ route('teacher.listsTeachers') }}">
-                                    {{ __('Mis profesores') }}
+                                    {{ __('Profesores') }}
                                 </a>
                             </li>
                         @endif
@@ -57,7 +57,7 @@
                         @if (Auth::user()->can('teacher'))
                             <li class="nav-item">
                                 <a class="nav-link  {{ request()->routeIs('student.studentslist') ? 'active' : '' }}" href="{{ route('student.studentslist') }}">
-                                    {{ __('Mis Alumnos') }}
+                                    {{ __('Alumnos') }}
                                 </a>
                             </li>
                         @endif
@@ -88,21 +88,27 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
 
-                                    @if (Auth::user()->getRoleNames()->first() == 'student')
+                                    @if (Auth::user()->user_type== 'student')
                                         <a class="dropdown-item" href="{{ route('meeting.mymeetings') }}">
-                                            {{ __('Mis reuniones') }}
+                                            {{ __('Reuniones') }}
                                         </a>
                                     @endif
 
                                     @if (Auth::user()->can('student'))
                                         <a class="dropdown-item" href="{{ route('teacher.listsTeachers') }}">
-                                            {{ __('Mis profesores') }}
+                                            {{ __('Profesores') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('students.horarios') }}">
+                                            {{ __('Horarios') }}
                                         </a>
                                     @endif
 
                                     @if (Auth::user()->can('teacher'))
                                         <a class="dropdown-item" href="{{ route('student.studentslist') }}">
-                                            {{ __('Mis Alumnos') }}
+                                            {{ __('Alumnos') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('students.horarios') }}">
+                                            {{ __('Horarios') }}
                                         </a>
                                     @endif
 
@@ -131,6 +137,10 @@
 
 
     </div>
+
+    <footer class="py-4 text-center text-sm text-black dark:text-white/70">
+        Javi v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+    </footer>
 </body>
 
 </html>

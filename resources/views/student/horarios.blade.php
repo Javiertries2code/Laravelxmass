@@ -1,37 +1,42 @@
 @extends('layouts.app')
 @section('content')
-
     <div class="container">
         <h1 class="mb-4">Horarios de los estudiantes</h1>
-        @foreach ($schedules as $i => $studentGroup)
-        <h2 class="mb-4">{{ $i }}</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Día</th>
-                    <th>Hora 1</th>
-                    <th>Hora 2</th>
-                    <th>Hora 3</th>
-                    <th>Hora 4</th>
-                    <th>Hora 5</th>
-                    <th>Hora 6</th>
+        @foreach ($schedules as $i => $studentHorarios)
+            <h2 class="mb-4"> Curso {{ $studentHorarios->first()->course->name }} </h2>
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($studentGroup as $student)
-                <tr>
-                    <td>{{ $student->day_week }}</td>
-                    <td>{{ $student->hour_1  }}</td>
-                    <td>{{ $student->hour_2 }}</td>
-                    <td>{{ $student->hour_3 }}</td>
-                    <td>{{ $student->hour_4 }}</td>
-                    <td>{{ $student->hour_5 }}</td>
-                    <td>{{ $student->hour_6 }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <table class="table table-striped table-hover table-bordered border-primary">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Día</th>
+                        @for ($i = 1; $i <= 6; $i++)
+                            <th scope="col">Hora {{ $i }}</th>
+                        @endfor
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($studentHorarios as $diadelasemana)
+                        <tr>
+                            <th scope="row"> {{ $diadelasemana->day_week }}
+                            </th>
+                            @for ($i = 1; $i <= 6; $i++)
+                                <td>
+                                    @php $hour_var = "hour_$i"; @endphp
+                                    @if ($diadelasemana->course->subjects->where('id', $diadelasemana->$hour_var)->first())
+                                        {{ $diadelasemana->course->subjects->where('id', $diadelasemana->$hour_var)->first()->code }}
+                                    @else
+                                        <span class="text-danger">No existe asignatura</span>
+                                    @endif
+                                </td>
+                            @endfor
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         @endforeach
     </div>
 @endsection
+

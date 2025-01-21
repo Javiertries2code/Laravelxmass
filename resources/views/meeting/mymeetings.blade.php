@@ -18,6 +18,7 @@
                     <i class="bi bi-plus-circle"></i> New Meeting
                 </a>
             </div>
+
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -75,6 +76,7 @@
                         @endforeach
                     </tbody>
                 </table>
+
             </div>
         @endif
     </div>

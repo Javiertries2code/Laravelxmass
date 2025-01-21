@@ -31,13 +31,26 @@ class StudentScheduleController extends Controller
         //
     }
 
+
+
+     public function showOne($id){
+        $schedule =  StudentSchedule::where('course_id', $id)->get();
+
+
+        return view('student.scheduleCourse', ['schedules' => $schedule ]);
+
+
+     }
     /**
      * Display the specified resource.
      */
     public function show()
     {
         $schedules =  StudentSchedule::all()->groupBy('course_id');
-        // foreach( $schedules as $schs)
+        $subjects = \App\Models\Subject::all();
+        $subject2 = \App\Models\Subject::find(2);
+        $subject6 = \App\Models\Subject::find(6);
+
         // {
         //    foreach(  $schs as $sch)
         //    {
@@ -54,7 +67,7 @@ class StudentScheduleController extends Controller
         //    echo $sch->hour_6 ;echo "<br><br>";
         // }
        //}
-       return view('student.horarios', ['schedules' => $schedules ]);
+       return view('student.horarios', ['schedules' => $schedules, 'subjects' => $subjects, 'subject2' => $subject2, 'subject6' => $subject6 ]);
 
         // Aquí podrías obtener datos si fuera necesario
         //return view('student.horarios', ['schedules' => $schedules ]);

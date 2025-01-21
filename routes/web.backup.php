@@ -53,7 +53,7 @@ Route::post('admin/storeCoursewithsubject', [CourseController::class, 'storeCour
 
 Route::get('course/coursesList', [CourseController::class, 'coursesList'])->name('course.coursesList')->middleware('can:student');
 
-Route::get('subjects/subjectsList', [SubjectController::class, 'subjectsList'])->name('subjects.subjectsList')->middleware('can:teacher_student');
+Route::get('subjects/subjectsList', [SubjectController::class, 'subjectsList'])->name('subjects.subjectsList');
 Route::delete('admin/subjectDelete/{id}', [SubjectController::class, 'subjectDelete'])->name('subject.subjectDelete')->middleware('can:admin');
 Route::post('admin/storeSubject', [SubjectController::class, 'storeSubject'])->name('subject.storeSubject')->middleware('can:admin');
 Route::put('admin/updateSubject/{id}', [SubjectController::class, 'updateSubject'])->name('subject.updateSubject')->middleware('can:admin');
@@ -92,7 +92,7 @@ Route::get('/teacher/showOne/{teacher_id}', [App\Http\Controllers\TeacherControl
 Route::get('/meeting/newmeeting', [App\Http\Controllers\MeetingController::class, 'create'])->name('newmeeting');
 // esto aun no funcion, el middleware no deja borrar con 403. El middleware no parece funcionar bien
 Route::delete('/meeting/deleteMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'destroy'])->name('meeting.delete')->middleware(['can:teacher_student']);
-Route::get('/meeting/editMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'editMeeting'])->name('editMeeting')->middleware(['can:teacher_student']);
+Route::get('/meeting/editMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'editMeeting'])->name('editMeeting')->middleware(['can:admin']);
 Route::post('/meeting/updateMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'update'])->name('meeting.update')->middleware(['can:teacher']);
 Route::post('/meeting/approveMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'approveMeeting'])->name('meeting.approveMeeting')->middleware(['can:teacher']);
 

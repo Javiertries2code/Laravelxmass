@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <h1 class="mb-4">Horarios de los estudiantes</h1>
+        <h1 class="mb-4">Horarios de los profesores</h1>
         @foreach ($schedules as $i => $studentGroup)
         <h2 class="mb-4">{{ $i }}</h2>
         <table class="table table-bordered">

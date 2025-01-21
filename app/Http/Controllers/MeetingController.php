@@ -97,11 +97,16 @@ class MeetingController extends Controller
 
             if (Auth::user()->can('teacher')) {
                 $actions = [
-                    'delete' => 'meeting.delete',
+                    'create' => 'newmeeting', // Adjust route names as needed
                     'edit' => 'editMeeting',
+
+                    'delete' => 'meeting.delete',
                 ];
             } elseif (Auth::user()->can('student') ) {
                 $actions = [
+                    'create' => 'newmeeting', // Adjust route names as needed
+                    'edit' => 'editMeeting',
+
                     'delete' => 'meeting.delete',
                 ];
             }else {
