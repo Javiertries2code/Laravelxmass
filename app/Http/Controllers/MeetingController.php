@@ -165,11 +165,16 @@ class MeetingController extends Controller
 
        // dd($request);
         $meeting = Meeting::find($request->id);
+        $meetingCompare = Meeting::find($request->id);
+
+
         $meeting->day_week = $request->input('day_week');
         $meeting->hour = $request->input('hour');
         $meeting->teacher_id = $request->input('teacher_id');
         $meeting->student_id = $request->input('student_id');
-        $meeting->accepted = 0;
+        if($meeting->day_week != $meetingCompare->day_week || $meeting->hour != $meetingCompare->hour || $meeting->teacher_id != $meetingCompare->teacher_id
+        || $meeting->student_id != $meetingCompare->student_id)
+          {  $meeting->accepted = 0;}
         $meeting->save();
         return redirect()->route('meeting.mymeetings');
     }
