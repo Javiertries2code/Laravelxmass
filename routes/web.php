@@ -80,16 +80,16 @@ Route::get('students/horarios', [App\Http\Controllers\StudentScheduleController:
 Route::get('students/horarios/{id}', [App\Http\Controllers\StudentScheduleController::class, 'showOne'])->name('students.ScheduleCourse')->middleware('can:student');
 
 
-Route::get('/teacher/teachersSchedule', [App\Http\Controllers\TeacherController::class, 'teachersSchedule'])->name('teacher.teachersSchedule');
+Route::get('/teacher/teachersSchedule', [App\Http\Controllers\TeacherController::class, 'teachersSchedule'])->name('teacher.teachersSchedule')->middleware('can:teacher');;
 
 
-Route::get('/teacher/teachersList', [App\Http\Controllers\TeacherController::class, 'teachers'])->name('teachersList');
+Route::get('/teacher/teachersList', [App\Http\Controllers\TeacherController::class, 'teachers'])->name('teachersList')->middleware('can:teacher');;
 
-Route::get('/teacher/showOne/{teacher_id}', [App\Http\Controllers\TeacherController::class, 'showOne'])->name('showOneteacher');
+Route::get('/teacher/showOne/{teacher_id}', [App\Http\Controllers\TeacherController::class, 'showOne'])->name('showOneteacher')->middleware('can:teacher');
 
 
 /// Routes mmeting
-Route::get('/meeting/newmeeting', [App\Http\Controllers\MeetingController::class, 'create'])->name('newmeeting');
+Route::get('/meeting/newmeeting', [App\Http\Controllers\MeetingController::class, 'create'])->name('newmeeting')->middleware(['can:teacher_student']);;
 // esto aun no funcion, el middleware no deja borrar con 403. El middleware no parece funcionar bien
 Route::delete('/meeting/deleteMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'destroy'])->name('meeting.delete')->middleware(['can:teacher_student']);
 Route::get('/meeting/editMeeting/{id}', [App\Http\Controllers\MeetingController::class, 'editMeeting'])->name('editMeeting')->middleware(['can:teacher_student']);
@@ -115,7 +115,7 @@ Route::get('/admin/registrationNew', [App\Http\Controllers\AdminController::clas
 Route::get('/admin/registrationList', [App\Http\Controllers\AdminController::class, 'registrationList'])->name('admin.registrationList')->middleware('can:admin');
 Route::post('/admin/registrationStore', [App\Http\Controllers\AdminController::class, 'registrationStore'])->name('admin.registrationStore')->middleware('can:admin');
 Route::post('/admin/registrationUpdate', [App\Http\Controllers\AdminController::class, 'registrationUpdate'])->name('admin.registrationUpdate')->middleware('can:admin');
-Route::get('/admin/registrationList/{student_id}', [App\Http\Controllers\AdminController::class, 'registrationListByStudent'])->name('student.registrationListByStudent')->middleware(['can:student', 'can:teacher', 'can:admin']);
+Route::get('/admin/registrationList/{student_id}', [App\Http\Controllers\AdminController::class, 'registrationListByStudent'])->name('student.registrationListByStudent')->middleware(['can:student', 'can:teacher']);
 Route::get('/admin/registrationEdit/{id}', [App\Http\Controllers\AdminController::class, 'registrationEdit'])->name('admin.registrationEdit')->middleware(['can:admin']);
 Route::delete('/admin/registrationDelete/{id}', [App\Http\Controllers\AdminController::class, 'registrationDelete'])->name('admin.registrationDelete')->middleware(['can:admin']);
 Auth::routes();

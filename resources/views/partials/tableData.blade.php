@@ -1,4 +1,4 @@
-{{-- probando tabla "a rayas" --}}
+
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -18,11 +18,11 @@
                     @endforeach
                     <td>
                         @if (isset($actions['delete']))
-                            <!-- Botón para eliminar -->
                             <form action="{{ route($actions['delete'], ['id' => $item->id]) }}" method="POST"
                                 style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
+                                {{-- so the info in here in delivered to the modal, that once accepted is submitted --}}
                                 <button class="btn btn-sm btn-danger" type="button" data-bs-toggle="modal"
                                     data-bs-target="#modal-javichu" data-id="{{ $item->id }}">
                                     <i class="bi bi-trash-fill"></i>
@@ -32,7 +32,6 @@
                         @endif
 
                         @if (isset($actions['edit']))
-                            <!-- Botón para editar -->
                             <form action="{{ route($actions['edit'], ['id' => $item->id]) }}" method="GET"
                                 style="display: inline-block;">
                                 <button class="btn btn-sm btn-primary" type="submit">
@@ -52,12 +51,12 @@
     @endif
 </div>
 
-{{-- Logica para motrar un modal de confirmacion antes de borrar --}}
+{{-- her eit goes the modal made on partials--}}
 @include('partials.modal')
 <script>
     let currentForm = null;
     document.addEventListener('DOMContentLoaded', function() {
-
+//  here, it retrrieves the info kept in the bottom, and delivers to submit, or cancels.
         // init constantes
         const confirmDeleteModal = document.getElementById('modal-javichu');
         const confirmDeleteButton = document.getElementById('confirm-modal-btn');
@@ -66,7 +65,7 @@
         confirmDeleteModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget; // Botón que activó el modal
             const itemId = button.getAttribute('data-id'); // ID del elemento
-            currentForm = button.closest('form'); // Formulario correspondiente
+            currentForm = button.closest('form'); // it climbs up along the family tree untill finding a form
 
             // Actualiza el modal con el ID del elemento
             modalItemId.textContent = itemId;

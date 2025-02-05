@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongstoMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 
 
 

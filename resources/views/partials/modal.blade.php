@@ -1,4 +1,4 @@
-<!-- Modal de confirmación -->
+<!-- Modal for confirmation -->
 <div class="modal fade" id="modal-javichu" tabindex="-1" aria-labelledby="modal-javichu-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

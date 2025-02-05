@@ -1,14 +1,15 @@
-<!-- <?php
+<!-- <?php 
 
-namespace App\Http\Controllers;
+//
+// namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 
-class MyHomeController extends Controller
-{
+// class MyHomeController extends Controller
+// {
 
-    public function goHome()
-    {
+//     public function goHome()
+//     {
 
         // if (auth()->check()) {
         //     if (auth()->user()->user_type == 'admin' ) {
@@ -25,7 +26,7 @@ class MyHomeController extends Controller
         // {
         //    echo "else";
             // return redirect()->route('login');
-        }
+   //     }
         // if (auth()->check()) {
         //     if (auth()->user()->user_type == 'admin' && auth()->user()->can('admin')) {
         //         return redirect()->route('admin.adminhome');
@@ -38,6 +39,6 @@ class MyHomeController extends Controller
         //     }
         // }
 
-        return redirect()->route('login');
-    }
-} -->
+//         return redirect()->route('login');
+//     }
+// } -->

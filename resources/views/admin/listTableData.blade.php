@@ -27,7 +27,7 @@
             </div>
         @endif
 
-
+{{--  way i pass on the arguments receibed in adminlisttable, to the partial inside --}}
         @include('partials.tableData', ['headers' => $headers, 'data' => $data, 'actions' => $actions])
 
 

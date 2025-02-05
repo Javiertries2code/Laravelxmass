@@ -47,11 +47,11 @@
                         @endif
 
                         @if (Auth::user()->can('student'))
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link  {{ request()->routeIs('teacher.listsTeachers') ? 'active' : '' }}" href="{{ route('teacher.listsTeachers') }}">
                                     {{ __('Profesores') }}
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
 
                                 <a class="nav-link  {{ request()->routeIs('students.horarios') ? 'active' : '' }}" href="{{ route('students.horarios') }}">
@@ -64,6 +64,11 @@
                             <li class="nav-item">
                                 <a class="nav-link  {{ request()->routeIs('student.studentslist') ? 'active' : '' }}" href="{{ route('student.studentslist') }}">
                                     {{ __('Alumnos') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link  {{ request()->routeIs('teacher.listsTeachers') ? 'active' : '' }}" href="{{ route('teacher.listsTeachers') }}">
+                                    {{ __('Profesores') }}
                                 </a>
                             </li>
                         @endif
@@ -145,7 +150,7 @@
     </div>
 
     <footer class="py-4 text-center text-sm text-black dark:text-white/70">
-        Javi v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+        Javier Bravo Gutierrez -> ElorAdmin
     </footer>
 </body>
 

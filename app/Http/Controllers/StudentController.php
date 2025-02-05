@@ -87,8 +87,9 @@ class StudentController extends AdminController
 
         if ($user && $user->can('teacher')) {
 
-            // Qeury hecha a mano. De momento es chapucero, I'm aware.
-            // Espero poder mejorarlo pero de momento este paso a paso funciona
+            
+            // SUPERQUERY Got subjects, that belong to course, that is a course i teah, then students cpnnected
+            //fuckme, im awesome
 
             // reoger las asignaturas asociadas a este profe
             $subject_ids = \App\Models\Subject::where('teacher_id', $user->id)->pluck('id');
