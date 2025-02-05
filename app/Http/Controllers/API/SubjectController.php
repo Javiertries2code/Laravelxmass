@@ -25,7 +25,11 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $subject = new Subject();
+        $subject->name = $request->input('name');
+        $subject->save();
+        return response()->json(['message' => 'Asignatura creada con exito', 'subject' => $subject])
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -42,7 +46,10 @@ return response()->json($subject)->setStatusCode(Response::HTTP_OK);
      */
     public function update(Request $request, Subject $subject)
     {
-        //
+        $subject->name = $request->input('name');
+        $subject->save();
+        return response()->json(['message' => 'Asignatura actualizada con exito', 'subject' => $subject])
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -50,6 +57,8 @@ return response()->json($subject)->setStatusCode(Response::HTTP_OK);
      */
     public function destroy(Subject $subject)
     {
-        //
+        $subject->delete();
+        return response()->json(['message' => 'Asignatura eliminada con exito'])
+            ->setStatusCode(Response::HTTP_OK);
     }
 }

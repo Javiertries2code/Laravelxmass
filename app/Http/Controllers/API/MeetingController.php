@@ -27,7 +27,29 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $meeting = Meeting::create($request->all());
+        return response()->json(['meeting' => $meeting])
+            ->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Meeting $meeting)
+    {
+        $meeting->update($request->all());
+        return response()->json(['meeting' => $meeting])
+            ->setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Meeting $meeting)
+    {
+        $meeting->delete();
+        return response()->json(['message' => 'Meeting deleted'])
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -39,19 +61,4 @@ class MeetingController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Meeting $meeting)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Meeting $meeting)
-    {
-        //
-    }
 }

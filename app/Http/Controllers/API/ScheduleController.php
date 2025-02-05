@@ -25,7 +25,8 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $schedule = Schedule::create($request->all());
+        return response()->json(['schedule' => $schedule], Response::HTTP_CREATED);
     }
 
     /**
@@ -42,7 +43,9 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, Schedule $schedule)
     {
-        //
+        $schedule->update($request->all());
+        return response()->json(['schedule' => $schedule])
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -50,6 +53,7 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        //
+        $schedule->delete();
+        return response()->json(['message' => 'Schedule deleted'], Response::HTTP_NO_CONTENT);
     }
 }

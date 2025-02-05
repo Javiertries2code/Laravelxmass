@@ -24,7 +24,10 @@ class RegistrationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $registration = Registration::create($request->all());
+        return response()->json(['registration' => $registration])
+            ->setStatusCode(Response::HTTP_CREATED);
+
     }
 
     /**
@@ -40,7 +43,9 @@ class RegistrationController extends Controller
      */
     public function update(Request $request, Registration $registration)
     {
-        //
+        $registration->update($request->all());
+        return response()->json(['registration' => $registration])
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -48,6 +53,8 @@ class RegistrationController extends Controller
      */
     public function destroy(Registration $registration)
     {
-        //
+        $registration->delete();
+        return response()->json(['message' => 'Registro eliminado'])
+            ->setStatusCode(Response::HTTP_OK);
     }
 }
