@@ -23,6 +23,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     //use SoftDeletes;
     use HasRoles;
+    use HasApiTokens;
 
 //esto deberia evitar que se borre el usuario
 
